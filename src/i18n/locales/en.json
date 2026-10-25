@@ -1,0 +1,22 @@
+{
+  "hud": {
+    "language": "Português",
+    "mute": "Sound on",
+    "unmute": "Sound off",
+    "close": "Close (Esc)",
+    "objectsMenu": "Room objects"
+  },
+  "objects": {
+    "computer": "Computer — Projects",
+    "frames": "Frames — Awards & certificates",
+    "portrait": "Portrait — About me",
+    "bookshelf": "Bookshelf — Skills",
+    "journal": "Journal — Experience",
+    "phone": "Phone — Contact",
+    "diploma": "Diploma — Education",
+    "pet": "Pet"
+  },
+  "panel": {
+    "placeholder": "Panel under construction."
+  }
+}

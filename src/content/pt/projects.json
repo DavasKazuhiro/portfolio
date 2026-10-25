@@ -1,0 +1,50 @@
+[
+  {
+    "icon": "diagram-project",
+    "titulo": "Sistema de Chamadas",
+    "destaque": true,
+    "descricao": "Aplicação web para gerenciamento de turmas e controle de frequência acadêmica, com arquitetura MVC e API REST. Autenticação e controle de acesso por tipo de usuário (professor e aluno), gerenciamento de aulas com geolocalização e geração de relatórios.",
+    "tecnologias": [
+      "React",
+      "JavaScript",
+      "Node.js",
+      "MySQL"
+    ],
+    "link": null
+  },
+  {
+    "icon": "ccg",
+    "titulo": "Controle de Estoque ONG",
+    "descricao": "Programa web desenvolvido como projeto de extensão para facilitar o controle do estoque de insumos da ONG Crazy Cat Gang, que abriga, castra e doa gatos de rua.",
+    "tecnologias": [],
+    "link": "https://github.com/DavasKazuhiro/Estoque-CrazyCatGang"
+  },
+  {
+    "icon": "play",
+    "titulo": "Beat Learning",
+    "descricao": "Aplicativo desenvolvido em Processing que simula uma bateria eletrônica, com o intuito de ensinar ritmo, batida e teoria musical a crianças do ensino fundamental.",
+    "tecnologias": [],
+    "link": "https://github.com/DavasKazuhiro/Beat-Learning"
+  },
+  {
+    "icon": "droplet",
+    "titulo": "Bebedouro Inteligente",
+    "descricao": "Bebedouro inteligente para cachorros de rua, criado para reduzir casos de dengue e melhorar a qualidade de vida dos animais. Simulado em microPython/ESP32 (Wokwi) e modelado em 3D no SolidWorks.",
+    "tecnologias": [],
+    "link": "https://github.com/DavasKazuhiro/Bebedouro-Para-Cachorros"
+  },
+  {
+    "icon": "folder",
+    "titulo": "Organizador de Arquivos",
+    "descricao": "Programa em Python que organiza diretórios do computador em pastas de acordo com suas extensões, utilizando as bibliotecas os e shutil.",
+    "tecnologias": [],
+    "link": "https://github.com/DavasKazuhiro/Organizador-de-Arquivos"
+  },
+  {
+    "icon": "calculator",
+    "titulo": "Calculadora de Conjuntos",
+    "descricao": "Algoritmo em Python que lê arquivos .txt e calcula operações de União, Interseção, Diferença e Produto Cartesiano.",
+    "tecnologias": [],
+    "link": "https://github.com/DavasKazuhiro/TDE_Conjuntos_RPND"
+  }
+]

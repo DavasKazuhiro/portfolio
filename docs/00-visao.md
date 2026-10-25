@@ -1,0 +1,37 @@
+# Visão do projeto
+
+## Pitch
+Em vez de rolar uma página, o visitante **entra no meu quarto**: uma cena em pixel art isométrica, como o menu de um jogo. Cada objeto conta uma parte da minha história — o computador mostra meus projetos, os quadros na parede guardam prêmios e certificados, o retrato fala de mim e da minha família.
+
+## Público
+1. **Recrutadores e gestores técnicos** (prioridade): precisam achar projetos, experiência e contato em menos de 1 minuto, inclusive no celular.
+2. Colegas, professores e comunidade: exploram com calma, descobrem easter eggs.
+
+Consequência: a experiência é lúdica, mas **nunca esconde o essencial**. Tooltip no hover, menu acessível por teclado, objetos com destaque pulsante e carregamento rápido.
+
+## Definições
+| Tema | Decisão |
+|---|---|
+| Visão | Isométrico 2D, câmera fixa com zoom/pan |
+| Assets | Asset pack livre (licença compatível) + objetos únicos customizados |
+| Idiomas | PT-BR (padrão) + EN, com toggle |
+| Interação | Zoom da câmera no objeto + UI temática por objeto |
+| Extras | Tela de título "Press Start", música + SFX (mudo por padrão), dia/noite pelo horário real, avatar/pet animado |
+| Mobile | Mesmo quarto, pan/zoom por toque, objetos com brilho pulsante |
+| Deploy | A definir (GitHub Pages ou Vercel); build estático com `base: './'` |
+| Extensibilidade | Novo objeto = Tiled + registry + painel + conteúdo |
+
+## Objetos
+| Objeto (`id`) | Conteúdo | UI temática |
+|---|---|---|
+| Computador (`computer`) | Projetos | Desktop retrô com janelas/pastas |
+| Quadros (`frames`) | Prêmios e certificados | Moldura ampliada com galeria |
+| Retrato (`portrait`) | Sobre mim e família | Porta-retrato com texto |
+| Estante (`bookshelf`) | Skills e ferramentas | Livros/cartuchos que abrem fichas |
+| Caderno (`journal`) | Experiência | Diário com páginas |
+| Celular (`phone`) | Contato + currículo | Tela de celular |
+| Diploma (`diploma`) | Formação | Diploma ampliado |
+| Pet (`pet`) | Easter egg | Balão de diálogo |
+
+## Fora de escopo (por enquanto)
+Backend, CMS, analytics com cookies, multiplayer, personagem andando pelo quarto com teclado.

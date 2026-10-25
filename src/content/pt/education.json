@@ -1,0 +1,12 @@
+{
+  "curso": "Bacharel em Ciência da Computação",
+  "instituicao": "PUCPR — Curitiba, PR",
+  "previsao": "Previsão de conclusão: 2027",
+  "ira": "IRA: 9,4",
+  "disciplinas": [
+    "Big Data",
+    "Estatística",
+    "Estrutura de Dados",
+    "Complexidade de Algoritmos"
+  ]
+}

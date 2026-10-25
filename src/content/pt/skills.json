@@ -1,0 +1,79 @@
+{
+  "tecnicas": [
+    {
+      "nome": "Java",
+      "icon": "java",
+      "nivel": 90
+    },
+    {
+      "nome": "Spring",
+      "icon": "leaf",
+      "nivel": 75
+    },
+    {
+      "nome": "Python",
+      "icon": "python",
+      "nivel": 80
+    },
+    {
+      "nome": "SQL / MySQL",
+      "icon": "database",
+      "nivel": 80
+    },
+    {
+      "nome": "React",
+      "icon": "react",
+      "nivel": 75
+    },
+    {
+      "nome": "JavaScript",
+      "icon": "js",
+      "nivel": 80
+    },
+    {
+      "nome": "Node.js",
+      "icon": "node-js",
+      "nivel": 70
+    }
+  ],
+  "ferramentas": [
+    "Git",
+    "MOA"
+  ],
+  "idiomas": [
+    {
+      "nome": "Português",
+      "nivel": "Nativo"
+    },
+    {
+      "nome": "Inglês",
+      "nivel": "Intermediário-avançado"
+    }
+  ],
+  "profissionais": [
+    {
+      "nome": "Raciocínio Lógico",
+      "perc": 95
+    },
+    {
+      "nome": "Comunicação",
+      "perc": 85
+    },
+    {
+      "nome": "Criatividade",
+      "perc": 80
+    },
+    {
+      "nome": "Trabalho em Equipe",
+      "perc": 90
+    },
+    {
+      "nome": "Proatividade",
+      "perc": 85
+    },
+    {
+      "nome": "Aprendizagem",
+      "perc": 95
+    }
+  ]
+}

@@ -1,16 +1,13 @@
-# React + Vite
+# Davi Natume · Portfolio "Quarto Pixel"
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Portfolio em forma de menu de jogo: um quarto em pixel art isométrico onde cada objeto abre uma parte da minha história.
 
-Currently, two official plugins are available:
+```bash
+pnpm install
+pnpm dev
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+- Visão e definições: [docs/00-visao.md](docs/00-visao.md)
+- Roadmap: [docs/roadmap.md](docs/roadmap.md)
+- Guia para desenvolvimento com Claude Code: [CLAUDE.md](CLAUDE.md)
+- Versão anterior do site: tag `legacy-v1`

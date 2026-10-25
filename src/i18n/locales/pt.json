@@ -1,0 +1,22 @@
+{
+  "hud": {
+    "language": "English",
+    "mute": "Ligar som",
+    "unmute": "Desligar som",
+    "close": "Fechar (Esc)",
+    "objectsMenu": "Objetos do quarto"
+  },
+  "objects": {
+    "computer": "Computador — Projetos",
+    "frames": "Quadros — Prêmios e certificados",
+    "portrait": "Retrato — Sobre mim",
+    "bookshelf": "Estante — Habilidades",
+    "journal": "Caderno — Experiência",
+    "phone": "Celular — Contato",
+    "diploma": "Diploma — Formação",
+    "pet": "Pet"
+  },
+  "panel": {
+    "placeholder": "Painel em construção."
+  }
+}
