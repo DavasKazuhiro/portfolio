@@ -1,0 +1,92 @@
+.projetos {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+  padding: clamp(70px, 9vw, 100px) 0;
+}
+
+.lista-projetos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.lista-projetos .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: clamp(28px, 3vw, 40px);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  background: rgba(255, 255, 255, 0.5);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  width: 340px;
+}
+
+.lista-projetos .card--destaque {
+  background: var(--color-surface);
+  border: 1.5px solid rgba(255, 63, 63, 0.25);
+}
+
+.lista-projetos .card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-card);
+}
+
+.card-icon {
+  font-size: 60px;
+  height: 60px;
+  width: 60px;
+  margin-bottom: 22px;
+  color: var(--color-accent);
+}
+
+.lista-projetos .card h2 {
+  font-size: 1.35rem;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.lista-projetos .card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-ink-soft);
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.card-tags span {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(255, 63, 63, 0.1);
+  color: var(--color-accent-dark);
+}
+
+.lista-projetos .card a {
+  color: var(--color-ink);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 22px;
+  display: inline-block;
+  padding: 11px 26px;
+  background-color: var(--color-bg-2);
+  border-radius: 40px;
+  transition: all 0.25s;
+}
+
+.lista-projetos .card a:hover {
+  box-shadow: var(--shadow-soft);
+  color: var(--color-accent);
+  transform: scale(1.04);
+}

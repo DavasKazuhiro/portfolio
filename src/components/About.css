@@ -1,0 +1,74 @@
+.sobre {
+  padding: clamp(60px, 8vw, 90px) 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+}
+
+.sobre-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(40px, 8vw, 90px);
+  padding: 30px 0;
+}
+
+.sobre-row--reverse {
+  flex-direction: row-reverse;
+}
+
+.sobre-texto {
+  max-width: 620px;
+}
+
+.sobre-texto h2 {
+  font-size: clamp(1.8rem, 3.6vw, 2.8rem);
+  font-weight: 600;
+}
+
+.sobre-texto h4 {
+  font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+  color: var(--color-accent);
+  font-weight: 500;
+  margin: 6px 0 16px;
+}
+
+.sobre-texto p {
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  line-height: 1.7;
+  color: var(--color-ink-soft);
+}
+
+.sobre-icons {
+  flex: 0 0 auto;
+  color: var(--color-accent);
+  font-size: clamp(120px, 14vw, 220px);
+  height: clamp(160px, 16vw, 280px);
+  width: clamp(160px, 16vw, 280px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: floating 3s ease-in-out infinite alternate;
+}
+
+@keyframes floating {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(16px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sobre-icons {
+    animation: none;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .sobre-row,
+  .sobre-row--reverse {
+    flex-direction: column;
+    text-align: center;
+    gap: 24px;
+  }
+}
