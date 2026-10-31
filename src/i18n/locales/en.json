@@ -17,6 +17,20 @@
     "pet": "Pet"
   },
   "panel": {
-    "placeholder": "Panel under construction."
+    "placeholder": "Panel under construction.",
+    "loading": "Loading..."
+  },
+  "computer": {
+    "windowTitle": "My Projects",
+    "path": "C:\\PROJECTS",
+    "listLabel": "Project folders",
+    "featured": "Featured",
+    "back": "< Back",
+    "technologies": "Technologies",
+    "openRepo": "View on GitHub",
+    "newTab": "(opens in a new tab)",
+    "noLink": "No public link for this code.",
+    "itemCount_one": "{{count}} item",
+    "itemCount_other": "{{count}} items"
   }
 }

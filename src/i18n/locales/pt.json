@@ -17,6 +17,20 @@
     "pet": "Pet"
   },
   "panel": {
-    "placeholder": "Painel em construção."
+    "placeholder": "Painel em construção.",
+    "loading": "Carregando..."
+  },
+  "computer": {
+    "windowTitle": "Meus Projetos",
+    "path": "C:\\PROJETOS",
+    "listLabel": "Pastas de projetos",
+    "featured": "Destaque",
+    "back": "< Voltar",
+    "technologies": "Tecnologias",
+    "openRepo": "Ver no GitHub",
+    "newTab": "(abre em nova aba)",
+    "noLink": "Código sem link público.",
+    "itemCount_one": "{{count}} item",
+    "itemCount_other": "{{count}} itens"
   }
 }

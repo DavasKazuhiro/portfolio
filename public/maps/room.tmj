@@ -1,0 +1,111 @@
+{
+ "compressionlevel": -1,
+ "type": "map",
+ "version": "1.10",
+ "tiledversion": "1.11.2",
+ "orientation": "isometric",
+ "renderorder": "right-down",
+ "infinite": false,
+ "width": 8,
+ "height": 8,
+ "tilewidth": 32,
+ "tileheight": 16,
+ "nextlayerid": 4,
+ "nextobjectid": 2,
+ "properties": [
+  {
+   "name": "note",
+   "type": "string",
+   "value": "Mapa do quarto (M1). Tiles placeholder: src/game/tools/gen-placeholder-tileset.mjs. Interagiveis: object layer interactables, propriedade id = id do registry."
+  }
+ ],
+ "layers": [
+  {
+   "id": 1,
+   "name": "floor",
+   "type": "tilelayer",
+   "x": 0,
+   "y": 0,
+   "width": 8,
+   "height": 8,
+   "opacity": 1,
+   "visible": true,
+   "data": [
+  1, 2, 1, 2, 1, 2, 1, 2,
+  2, 1, 2, 1, 2, 1, 2, 1,
+  1, 2, 1, 2, 1, 2, 1, 2,
+  2, 1, 2, 3, 3, 3, 2, 1,
+  1, 2, 1, 3, 3, 3, 1, 2,
+  2, 1, 2, 3, 3, 3, 2, 1,
+  1, 2, 1, 2, 1, 2, 1, 2,
+  2, 1, 2, 1, 2, 1, 2, 1
+  ]
+  },
+  {
+   "id": 2,
+   "name": "walls",
+   "type": "tilelayer",
+   "x": 0,
+   "y": 0,
+   "width": 8,
+   "height": 8,
+   "opacity": 1,
+   "visible": true,
+   "data": [
+  6, 5, 5, 5, 5, 8, 5, 5,
+  4, 0, 0, 0, 0, 0, 0, 0,
+  7, 0, 0, 0, 0, 0, 0, 0,
+  4, 0, 0, 0, 0, 0, 0, 0,
+  4, 0, 0, 0, 0, 0, 0, 0,
+  7, 0, 0, 0, 0, 0, 0, 0,
+  4, 0, 0, 0, 0, 0, 0, 0,
+  4, 0, 0, 0, 0, 0, 0, 0
+  ]
+  },
+  {
+   "id": 3,
+   "name": "interactables",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true,
+   "objects": [
+    {
+     "id": 1,
+     "name": "computer",
+     "type": "",
+     "x": 32,
+     "y": 0,
+     "width": 32,
+     "height": 16,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "id",
+       "type": "string",
+       "value": "computer"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "tilesets": [
+  {
+   "firstgid": 1,
+   "name": "placeholder-room",
+   "image": "../assets/tiles/placeholder-room.png",
+   "imagewidth": 128,
+   "imageheight": 96,
+   "tilewidth": 32,
+   "tileheight": 48,
+   "tilecount": 8,
+   "columns": 4,
+   "margin": 0,
+   "spacing": 0
+  }
+ ]
+}

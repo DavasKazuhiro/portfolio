@@ -10,6 +10,7 @@
 - **Título** (`Title`): quarto desfocado ao fundo, logo, "Press Start" piscando. Enter/clique/toque entra. Menu: Iniciar, Idioma, Som.
 - **Quarto** (`Room`): câmera mostra o quarto inteiro. Hover/foco em um objeto → outline + tooltip com nome e o que contém.
 - **Objeto em foco**: clique → câmera faz zoom no objeto (≈400 ms, ease-out) → painel temático abre. Esc / botão "Voltar" / clique fora → painel fecha → zoom-out.
+- **Visão de perto (decidido em 2026-10-31, entra no M2)**: depois do zoom, o objeto aparece como se o visitante estivesse diante dele, em vez de o painel ocupar a tela inteira. Ex.: no computador vemos mesa, monitor, teclado e caneca, e o conteúdo (pastas de projetos) fica **dentro da tela do monitor**. Cada objeto ganha uma ilustração frontal em pixel art (spec do `art-director`) com um retângulo de "área de conteúdo", onde o painel React é posicionado. Os painéis (`ComputerPanel` etc.) continuam iguais, só mudam de lugar. Em telas estreitas a ilustração é recortada para focar na área de conteúdo. Substitui a pendência do M1 "painel cobre o objeto em foco".
 
 ## Estados (store `useGameStore`)
 | Campo | Significado |
@@ -24,10 +25,13 @@
 |---|---|---|
 | `scene-ready` | Phaser → React | chave da cena |
 | `object-hover` | Phaser → React | id ou `null` |
-| `object-open` | Phaser → React | id |
+| `object-open` | Phaser → React | id (emitido **depois** do zoom terminar) |
 | `panel-closed` | React → Phaser | — (dispara zoom-out) |
+| `focus-object` | React → Phaser | id (menu de teclado pede o zoom; a cena responde com `object-open`) |
 
-Novos eventos previstos: `focus-object` (React → Phaser, para abrir pelo menu de teclado com zoom), `time-of-day`, `audio-toggle`.
+Fluxo único de abertura: clique no canvas **ou** `focus-object` → zoom da câmera → `object-open` → painel. Se `prefers-reduced-motion`, o zoom é instantâneo.
+
+Novos eventos previstos: `time-of-day`, `audio-toggle`.
 
 ## Interação por dispositivo
 | Ação | Desktop | Teclado | Mobile |

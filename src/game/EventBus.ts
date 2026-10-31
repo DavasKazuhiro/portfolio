@@ -7,6 +7,8 @@ export interface GameEvents {
   'object-hover': [id: InteractableId | null]
   'object-open': [id: InteractableId]
   'panel-closed': []
+  // React → Phaser: pede o zoom no objeto (menu de teclado); a cena responde com 'object-open'.
+  'focus-object': [id: InteractableId]
 }
 
 const emitter = new Phaser.Events.EventEmitter()
