@@ -4,6 +4,7 @@ Rodado pelo `qa-a11y` ao fechar cada marco.
 
 ## Build
 - [ ] `pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm build` sem erros
+- [ ] CI do GitHub Actions (`.github/workflows/ci.yml`) verde no último commit do `main`
 - [ ] Console do navegador sem erros ao carregar, abrir e fechar painéis
 
 ## Funcional
