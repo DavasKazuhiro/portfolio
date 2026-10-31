@@ -3,7 +3,7 @@
     "icon": "diagram-project",
     "titulo": "Sistema de Chamadas",
     "destaque": true,
-    "descricao": "Aplicação web para gerenciar turmas e controlar a frequência dos alunos. Tem login com perfis de professor e aluno, cadastro de aulas com geolocalização e geração de relatórios. Arquitetura MVC com API REST.",
+    "descricao": "Aplicação web para gerenciar turmas e controlar a frequência dos alunos. Tem login com perfis de professor e aluno, cadastro de aulas com geolocalização e geração de relatórios. Arquitetura MVC com API REST. Feito em equipe.",
     "tecnologias": [
       "React",
       "JavaScript",
@@ -15,35 +15,28 @@
   {
     "icon": "ccg",
     "titulo": "Controle de Estoque da ONG",
-    "descricao": "Sistema web que facilita o controle do estoque de insumos da ONG Crazy Cat Gang, que abriga, castra e doa gatos de rua. Feito como projeto de extensão.",
-    "tecnologias": [],
+    "descricao": "Sistema web que facilita o controle do estoque de insumos da ONG Crazy Cat Gang, que abriga, castra e doa gatos de rua. Feito em equipe, como projeto de extensão.",
+    "tecnologias": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "MySQL"
+    ],
     "link": "https://github.com/DavasKazuhiro/Estoque-CrazyCatGang"
   },
   {
     "icon": "play",
     "titulo": "Beat Learning",
-    "descricao": "Aplicativo que simula uma bateria eletrônica para ensinar ritmo, batida e teoria musical a crianças do ensino fundamental.",
+    "descricao": "Aplicativo que simula uma bateria eletrônica para ensinar ritmo, batida e teoria musical a crianças do ensino fundamental. Feito em equipe.",
     "tecnologias": [
       "Processing"
     ],
     "link": "https://github.com/DavasKazuhiro/Beat-Learning"
   },
   {
-    "icon": "droplet",
-    "titulo": "Bebedouro Inteligente",
-    "descricao": "Bebedouro inteligente para cães de rua, pensado para reduzir casos de dengue e melhorar a qualidade de vida dos animais. A parte eletrônica foi simulada em MicroPython com ESP32 no Wokwi e o modelo 3D foi feito no SolidWorks.",
-    "tecnologias": [
-      "MicroPython",
-      "ESP32",
-      "Wokwi",
-      "SolidWorks"
-    ],
-    "link": "https://github.com/DavasKazuhiro/Bebedouro-Para-Cachorros"
-  },
-  {
     "icon": "folder",
     "titulo": "Organizador de Arquivos",
-    "descricao": "Script que organiza um diretório do computador, separando os arquivos em pastas de acordo com a extensão. Usa as bibliotecas os e shutil.",
+    "descricao": "Script que organiza um diretório do computador, separando os arquivos em pastas de acordo com a extensão. Usa as bibliotecas os e shutil. Feito em equipe.",
     "tecnologias": [
       "Python"
     ],
@@ -52,7 +45,7 @@
   {
     "icon": "calculator",
     "titulo": "Calculadora de Conjuntos",
-    "descricao": "Programa que lê conjuntos a partir de arquivos .txt e calcula união, interseção, diferença e produto cartesiano.",
+    "descricao": "Programa que lê conjuntos a partir de arquivos .txt e calcula união, interseção, diferença e produto cartesiano. Feito em equipe.",
     "tecnologias": [
       "Python"
     ],
