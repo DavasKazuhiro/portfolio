@@ -14,7 +14,7 @@ src/game/
     registry.ts        # ids dos interagíveis
     Interactable.ts    # sprite + outline de hover + clique de um objeto
     placeholders.ts    # sprites placeholder desenhados em CanvasTexture (M1; trocados no M2)
-  scenes/              # Boot → Preload → Room (Title no M4)
+  scenes/              # Boot → Preload → Room (Entrance, a porta do quarto, no M4)
   systems/
     RoomMap.ts         # monta as camadas do .tmj e lê o object layer `interactables`
     FocusCamera.ts     # câmera: visão do quarto, zoom de foco, resize

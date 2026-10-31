@@ -2,12 +2,13 @@
 
 ## Fluxo de telas
 ```
-[Loading] → [Título "Press Start"] → [Quarto] ⇄ [Objeto em foco + painel]
+[Loading] → [Porta do quarto] → [Quarto] ⇄ [Objeto em foco + painel]
                  │                       │
                  └── Opções: idioma, som └── HUD: idioma, som, menu acessível
 ```
 - **Loading** (`Boot`/`Preload`): barra em pixel; carrega mapa, sprites e fonte.
-- **Título** (`Title`): quarto desfocado ao fundo, logo, "Press Start" piscando. Enter/clique/toque entra. Menu: Iniciar, Idioma, Som.
+- **Porta do quarto** (`Entrance`, decidido em 2026-10-31; substitui a tela "Press Start"): porta fechada vista de frente, em pixel art, com plaquinha com o nome do Davi, luz escapando por baixo e um detalhe de personalidade (adesivo ou placa "não perturbe"). Hover/foco: a maçaneta brilha e aparece a dica "Entrar". Clique, toque ou qualquer tecla: a porta abre (animação de 3–4 quadros) → a câmera "atravessa" a porta (zoom rápido ou clarão de luz; corte necessário porque a porta é frontal e o quarto é isométrico) → o quarto aparece. Idioma e som ficam no HUD, no canto, como no quarto. Esse primeiro gesto também libera o áudio do navegador (a música só começa se o som estiver ligado).
+  - Recrutadores primeiro: qualquer clique ou tecla abre; animação curta (≤ 1 s); quem já visitou entra direto (lembrado em `localStorage`); o menu acessível de objetos já funciona na porta, então teclado e leitor de tela não esperam a animação; com `prefers-reduced-motion` a porta abre sem animação.
 - **Quarto** (`Room`): câmera mostra o quarto inteiro. Hover/foco em um objeto → outline + tooltip com nome e o que contém.
 - **Objeto em foco**: clique → câmera faz zoom no objeto (≈400 ms, ease-out) → painel temático abre. Esc / botão "Voltar" / clique fora → painel fecha → zoom-out.
 - **Visão de perto (decidido em 2026-10-31, entra no M2)**: depois do zoom, o objeto aparece como se o visitante estivesse diante dele, em vez de o painel ocupar a tela inteira. Ex.: no computador vemos mesa, monitor, teclado e caneca, e o conteúdo (pastas de projetos) fica **dentro da tela do monitor**. Cada objeto ganha uma ilustração frontal em pixel art (spec do `art-director`) com um retângulo de "área de conteúdo", onde o painel React é posicionado. Os painéis (`ComputerPanel` etc.) continuam iguais, só mudam de lugar. Em telas estreitas a ilustração é recortada para focar na área de conteúdo. Substitui a pendência do M1 "painel cobre o objeto em foco".

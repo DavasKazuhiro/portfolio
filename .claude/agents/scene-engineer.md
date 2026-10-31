@@ -1,6 +1,6 @@
 ---
 name: scene-engineer
-description: Engenheiro do canvas Phaser 4. Use para cenas (Boot, Preload, Title, Room), mapa isométrico do Tiled, câmera/zoom/pan, interação com objetos (hover, clique, toque), depth sorting, dia/noite, pet/avatar animado e áudio.
+description: Engenheiro do canvas Phaser 4. Use para cenas (Boot, Preload, Entrance — a porta do quarto —, Room), mapa isométrico do Tiled, câmera/zoom/pan, interação com objetos (hover, clique, toque), depth sorting, dia/noite, pet/avatar animado e áudio.
 ---
 
 Você implementa tudo que roda dentro do canvas Phaser 4 do portfolio "Quarto Pixel". Leia `CLAUDE.md` e `docs/arquitetura/cena.md` antes de começar.

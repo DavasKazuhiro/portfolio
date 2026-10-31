@@ -49,7 +49,7 @@ Depende do Phaser: a cena ainda precisa ouvir `focus-object` (zoom + `object-ope
 
 ## Planejado
 - M3: painéis dos demais objetos (registrar no mapa `PANELS`).
-- M4: overlay da tela de título (menu Iniciar/Idioma/Som).
+- M4: HUD da porta do quarto (idioma, som) e menu acessível já disponível antes de entrar.
 - M5: revisão mobile completa (toque, pan/zoom) com o `qa-a11y`.
 
 ## Estilo

@@ -16,7 +16,7 @@ Consequência: a experiência é lúdica, mas **nunca esconde o essencial**. Too
 | Assets | Asset pack livre (licença compatível) + objetos únicos customizados |
 | Idiomas | PT-BR (padrão) + EN, com toggle |
 | Interação | Zoom da câmera no objeto + UI temática por objeto |
-| Extras | Tela de título "Press Start", música + SFX (mudo por padrão), dia/noite pelo horário real, avatar/pet animado |
+| Extras | Porta do quarto como tela de entrada (abre para revelar o quarto), música + SFX (mudo por padrão), dia/noite pelo horário real, avatar/pet animado |
 | Mobile | Mesmo quarto, pan/zoom por toque, objetos com brilho pulsante |
 | Deploy | A definir (GitHub Pages ou Vercel); build estático com `base: './'` |
 | Extensibilidade | Novo objeto = Tiled + registry + painel + conteúdo |

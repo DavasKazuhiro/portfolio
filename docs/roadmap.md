@@ -6,9 +6,9 @@ Cada marco é executado e aprovado separadamente. Ao fechar um marco, o `qa-a11y
 |---|---|---|
 | **M0 – Fundação** | Git + tag `legacy-v1`; base Phaser 4 + React 19 + TS + Vite + pnpm; ponte EventBus com painel de teste; conteúdo migrado para `src/content/pt`; `CLAUDE.md`; 5 agentes; `.mcp.json`; docs e ADRs iniciais | ✅ Concluído (2026-10-25) |
 | **M1 – Vertical slice** | Mapa isométrico no Tiled com tiles placeholder; `Boot/Preload` reais; computador como objeto do Tiled; hover com outline, clique com zoom de câmera; painel `ComputerPanel` lendo `projects.json`; Esc volta com zoom-out; foco/teclado | ✅ Concluído (2026-10-31) |
-| **M2 – Arte** | Escolha do pack (2–3 opções do `art-director`); paleta e bíblia de arte fechadas; sprites customizados (PC, quadros, retrato); iluminação dia/noite; **visão de perto** do computador (ilustração frontal com o painel dentro do monitor, ver [game design](design/game-design.md)) | ⏳ Próximo |
+| **M2 – Arte** | Escolha do pack (2–3 opções do `art-director`); paleta e bíblia de arte fechadas; sprites customizados (PC, quadros, retrato); iluminação dia/noite; **visão de perto** do computador (ilustração frontal com o painel dentro do monitor) e spec da **porta do quarto** (fechada, 3–4 quadros abrindo, variante noturna), ver [game design](design/game-design.md) | ⏳ Próximo |
 | **M3 – Objetos + conteúdo** | Todos os 8 objetos com painéis temáticos; conteúdo EN; prêmios/certificados e família preenchidos | — |
-| **M4 – Jogo** | Tela de título "Press Start"; música e SFX; avatar e pet animados | — |
+| **M4 – Jogo** | Porta do quarto como tela de entrada (cena `Entrance`, substitui o "Press Start"); música e SFX; avatar e pet animados | — |
 | **M5 – Lançamento** | Mobile (toque, pan/zoom), acessibilidade completa, performance, Playwright e2e, SEO/meta tags, deploy | — |
 
 ## Decisões em aberto

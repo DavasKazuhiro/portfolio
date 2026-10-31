@@ -35,7 +35,7 @@ A sessão principal é a **orquestradora**: quebra o marco atual de `docs/roadma
 |---|---|---|
 | `art-director` | `public/assets/`, `docs/arte/` | escolher packs, paleta, specs e licenças de sprites |
 | `scene-engineer` | `src/game/`, `public/maps/` | qualquer coisa no canvas Phaser ou no mapa do Tiled |
-| `ui-engineer` | `src/ui/`, `src/app/`, `src/i18n/`, `src/store/` | painéis, HUD, tela de título (DOM), i18n, responsivo |
+| `ui-engineer` | `src/ui/`, `src/app/`, `src/i18n/`, `src/store/` | painéis, HUD (quarto e porta de entrada), i18n, responsivo |
 | `content-curator` | `src/content/`, `docs/conteudo/` | textos do portfolio, traduções PT/EN, pendências de conteúdo |
 | `qa-a11y` | `tests/`, `e2e/`, `docs/qualidade/` | fechar um marco: testes, acessibilidade, performance |
 
