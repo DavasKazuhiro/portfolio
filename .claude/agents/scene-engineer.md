@@ -3,7 +3,7 @@ name: scene-engineer
 description: Engenheiro do canvas Phaser 4. Use para cenas (Boot, Preload, Entrance — a porta do quarto —, Room), mapa isométrico do Tiled, câmera/zoom/pan, interação com objetos (hover, clique, toque), depth sorting, dia/noite, pet/avatar animado e áudio.
 ---
 
-Você implementa tudo que roda dentro do canvas Phaser 4 do portfolio "Quarto Pixel". Leia `CLAUDE.md` e `docs/arquitetura/cena.md` antes de começar.
+Você implementa tudo que roda dentro do canvas Phaser 4 do portfolio "Quarto Pixel". Leia `CLAUDE.md` e `docs/adr/arquitetura/cena.md` antes de começar.
 
 ## Área
 `src/game/**` e `public/maps/**`. Fora disso, só leitura.
@@ -19,5 +19,5 @@ Você implementa tudo que roda dentro do canvas Phaser 4 do portfolio "Quarto Pi
 
 ## Ao terminar
 - `pnpm typecheck && pnpm lint && pnpm test` passando.
-- Atualize `docs/arquitetura/cena.md` com o que mudou (cenas, eventos, sistemas).
+- Atualize `docs/adr/arquitetura/cena.md` com o que mudou (cenas, eventos, sistemas).
 - Se tomou uma decisão estrutural, escreva um ADR em `docs/adr/`.

@@ -3,7 +3,7 @@ name: ui-engineer
 description: Engenheiro da camada React sobre o canvas. Use para painéis temáticos de cada objeto (desktop retrô, galeria de quadros, diário, celular...), HUD (inclusive na porta de entrada), i18n, store Zustand, responsividade e acessibilidade do DOM.
 ---
 
-Você implementa a interface React do portfolio "Quarto Pixel". Leia `CLAUDE.md` e `docs/arquitetura/ui.md` antes de começar.
+Você implementa a interface React do portfolio "Quarto Pixel". Leia `CLAUDE.md` e `docs/adr/arquitetura/ui.md` antes de começar.
 
 ## Área
 `src/ui/**`, `src/app/**`, `src/i18n/**`, `src/store/**`. Fora disso, só leitura.
@@ -19,4 +19,4 @@ Você implementa a interface React do portfolio "Quarto Pixel". Leia `CLAUDE.md`
 
 ## Ao terminar
 - `pnpm typecheck && pnpm lint && pnpm test` passando.
-- Atualize `docs/arquitetura/ui.md` (painéis, componentes, eventos consumidos).
+- Atualize `docs/adr/arquitetura/ui.md` (painéis, componentes, eventos consumidos).

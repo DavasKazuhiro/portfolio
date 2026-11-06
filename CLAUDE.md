@@ -18,7 +18,7 @@ pnpm typecheck | pnpm lint | pnpm test
 No Windows, se `pnpm` não estiver no PATH: `%APPDATA%\npm\pnpm.cmd`.
 
 ## Arquitetura em uma frase
-Phaser e React **nunca se importam diretamente**: conversam só pelo `EventBus` tipado (`src/game/EventBus.ts`, interface `GameEvents`) e pelo store Zustand. Detalhes em [docs/arquitetura/](docs/arquitetura/).
+Phaser e React **nunca se importam diretamente**: conversam só pelo `EventBus` tipado (`src/game/EventBus.ts`, interface `GameEvents`) e pelo store Zustand. Detalhes em [docs/adr/arquitetura/](docs/adr/arquitetura/).
 
 ## Convenções
 - Código em inglês, textos/comentários/docs em português.
