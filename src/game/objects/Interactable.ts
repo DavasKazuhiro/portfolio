@@ -1,57 +1,76 @@
 import * as Phaser from 'phaser'
 import { PALETTE } from '../assets'
-import { isoToScreen } from '../iso'
 import type { Rect } from '../systems/cameraMath'
-import { ensureOutlineTexture } from '../systems/outline'
-import type { InteractableSpec } from '../systems/RoomMap'
-import { createPlaceholder } from './placeholders'
+import { buildAlphaMask, ensureOutlineTexture, maskAt, maskBounds, type AlphaMask } from '../systems/outline'
 import type { InteractableId } from './registry'
+import { readQuartoPixel } from './spriteMeta'
 
-// Profundidade base dos objetos (chão e paredes usam 0..n camadas).
-const OBJECT_DEPTH = 100
 // Distância máxima (px de tela) entre apertar e soltar para contar como clique, não arrasto.
 const CLICK_SLOP = 8
+// O outline fica logo acima do sprite e das suas camadas (+0,01 cada), abaixo do que está na frente.
+const OUTLINE_DEPTH = 0.05
 
 export interface InteractableHandlers {
   onHover: (id: InteractableId, over: boolean) => void
   onClick: (id: InteractableId) => void
 }
 
-// Um objeto clicável do quarto: sprite + outline de hover (1 px em --accent).
+export interface InteractableParts {
+  id: InteractableId
+  // Sprite principal (textura = id) e camadas sólidas do mesmo canvas (ex.: `desk-lamp`).
+  sprite: Phaser.GameObjects.Sprite
+  solidLayers: Phaser.GameObjects.Sprite[]
+}
+
+// Um objeto clicável do quarto: sprite gerado + outline de hover (1 px gold-2, por fora) + área
+// de clique pela silhueta (specs.md, "Hover, clique e zoom"):
+// - a silhueta é a união do sprite com as camadas sólidas, no frame inicial;
+// - `minHit` (px do canvas) amplia o alvo de objetos pequenos em volta do centro da silhueta;
+// - quem está por cima ganha o clique (`input.topOnly`, ligado na cena). Decoração não é
+//   interativa, então o clique atravessa a cadeira até o computador.
 export class Interactable {
   readonly id: InteractableId
-  private readonly sprite: Phaser.GameObjects.Image
+  private readonly sprite: Phaser.GameObjects.Sprite
   private readonly outline: Phaser.GameObjects.Image
+  private readonly focusRect: Rect
 
-  constructor(scene: Phaser.Scene, spec: InteractableSpec, handlers: InteractableHandlers) {
-    this.id = spec.id
-    const { footprint } = spec
-    const art = createPlaceholder(scene, spec.id, {
-      width: footprint.x1 - footprint.x0,
-      depth: footprint.y1 - footprint.y0,
-    })
+  constructor(scene: Phaser.Scene, parts: InteractableParts, handlers: InteractableHandlers) {
+    this.id = parts.id
+    this.sprite = parts.sprite
+    const sprite = parts.sprite
+    const meta = readQuartoPixel(sprite.texture)
 
-    const anchor = isoToScreen(footprint.x0, footprint.y0)
-    const x = Math.round(anchor.x + art.offsetX)
-    const y = Math.round(anchor.y + art.offsetY)
-    // Ordenação isométrica: quem tem o vértice da frente mais embaixo fica na frente.
-    const depth = OBJECT_DEPTH + isoToScreen(footprint.x1, footprint.y1).y
+    const mask = buildAlphaMask(scene, [
+      { key: sprite.texture.key, frame: sprite.frame.name },
+      ...parts.solidLayers.map((l) => ({ key: l.texture.key, frame: l.frame.name })),
+    ])
 
-    this.sprite = scene.add.image(x, y, art.key).setOrigin(0, 0).setDepth(depth)
-    const outlineKey = ensureOutlineTexture(scene, art.key, PALETTE.accent)
+    // Canto superior esquerdo do canvas no mundo (a origem vem do pivot).
+    const left = sprite.x - sprite.displayOriginX
+    const top = sprite.y - sprite.displayOriginY
+
+    const outlineKey = ensureOutlineTexture(scene, `${sprite.texture.key}__outline`, mask, PALETTE.accent)
     this.outline = scene.add
-      .image(x - 1, y - 1, outlineKey)
+      .image(left - 1, top - 1, outlineKey)
       .setOrigin(0, 0)
-      .setDepth(depth + 0.5)
+      .setDepth(sprite.depth + OUTLINE_DEPTH)
       .setVisible(false)
 
-    // Hit test por pixel: só a parte desenhada do objeto responde ao mouse.
-    this.sprite.setInteractive({ pixelPerfect: true, alphaTolerance: 1, useHandCursor: true })
-    this.sprite.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => handlers.onHover(this.id, true))
-    this.sprite.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => handlers.onHover(this.id, false))
-    this.sprite.on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, (pointer: Phaser.Input.Pointer) => {
+    const hit = hitTester(mask, meta.minHit)
+    sprite.setInteractive({
+      hitArea: new Phaser.Geom.Rectangle(0, 0, mask.width, mask.height),
+      hitAreaCallback: (_area: unknown, x: number, y: number) => hit(x, y),
+      useHandCursor: true,
+    })
+    sprite.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => handlers.onHover(this.id, true))
+    sprite.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => handlers.onHover(this.id, false))
+    sprite.on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, (pointer: Phaser.Input.Pointer) => {
       if (pointer.getDistance() <= CLICK_SLOP) handlers.onClick(this.id)
     })
+
+    // Foco da câmera: `meta.quartoPixel.focus` (px do canvas); sem ele, a caixa da silhueta.
+    const local = meta.focus ?? maskBounds(mask) ?? { x: 0, y: 0, width: mask.width, height: mask.height }
+    this.focusRect = { x: left + local.x, y: top + local.y, width: local.width, height: local.height }
   }
 
   setHighlighted(on: boolean) {
@@ -62,13 +81,35 @@ export class Interactable {
     if (this.sprite.input) this.sprite.input.cursor = enabled ? 'pointer' : 'default'
   }
 
-  // Retângulo do mundo usado pelo foco da câmera.
+  // Retângulo do mundo que a câmera enquadra no zoom.
+  get focusBounds(): Rect {
+    return this.focusRect
+  }
+
+  // Caixa do outline no mundo (para a câmera garantir que nenhum interagível seja cortado).
   get bounds(): Rect {
-    return { x: this.sprite.x, y: this.sprite.y, width: this.sprite.width, height: this.sprite.height }
+    return { x: this.outline.x, y: this.outline.y, width: this.outline.width, height: this.outline.height }
   }
 
   destroy() {
-    this.sprite.destroy()
+    // No shutdown do jogo (HMR, desmontagem) o sprite pode já ter sido destruído.
+    if (this.sprite.scene) this.sprite.removeInteractive()
+    this.sprite.off(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER)
+    this.sprite.off(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT)
+    this.sprite.off(Phaser.Input.Events.GAMEOBJECT_POINTER_UP)
     this.outline.destroy()
   }
+}
+
+// Silhueta + alvo mínimo centrado na caixa da silhueta.
+function hitTester(mask: AlphaMask, minHit?: [number, number]) {
+  const box = maskBounds(mask)
+  if (!minHit || !box || (box.width >= minHit[0] && box.height >= minHit[1])) {
+    return (x: number, y: number) => maskAt(mask, x, y)
+  }
+  const cx = box.x + box.width / 2
+  const cy = box.y + box.height / 2
+  const hw = Math.max(box.width, minHit[0]) / 2
+  const hh = Math.max(box.height, minHit[1]) / 2
+  return (x: number, y: number) => maskAt(mask, x, y) || (Math.abs(x - cx) <= hw && Math.abs(y - cy) <= hh)
 }

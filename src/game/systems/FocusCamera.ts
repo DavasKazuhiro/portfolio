@@ -1,16 +1,15 @@
 import * as Phaser from 'phaser'
-import { fitZoom, focusZoom, padRect, rectCenter, type Rect } from './cameraMath'
+import { focusZoom, rectCenter, roomView, snapCenter, type Rect, type RoomFraming } from './cameraMath'
 import { prefersReducedMotion } from './motion'
 
 export const FOCUS_DURATION = 400
 const FOCUS_EASE = 'Cubic.easeOut'
-// Margem em volta do quarto na visão geral (px do mundo).
-const ROOM_PADDING = 8
 
 export type FocusState = 'room' | 'zooming-in' | 'focused' | 'zooming-out'
 
 // Controla a câmera principal do quarto:
-// - 'room': quarto inteiro, maior zoom inteiro que cabe na tela;
+// - 'room': quarto com o maior zoom inteiro em que a área segura cabe (o alto das paredes pode
+//   ser cortado em telas baixas; ver cameraMath.roomView);
 // - 'zooming-in' → 'focused': pan + zoomTo até o objeto (instantâneo com reduced-motion);
 // - 'zooming-out' → 'room': volta à visão geral.
 // O zoom final é sempre inteiro; só os quadros intermediários da animação são fracionários.
@@ -23,14 +22,12 @@ export class FocusCamera {
   // Incrementa a cada animação; callbacks de animações canceladas são descartados.
   private generation = 0
   private readonly cam: Phaser.Cameras.Scene2D.Camera
-  private readonly roomRect: Rect
 
   constructor(
     private readonly scene: Phaser.Scene,
-    roomBounds: Rect,
+    private readonly framing: RoomFraming,
   ) {
     this.cam = scene.cameras.main
-    this.roomRect = padRect(roomBounds, ROOM_PADDING)
     scene.scale.on(Phaser.Scale.Events.RESIZE, this.onResize, this)
     this.snapToRoom()
   }
@@ -40,7 +37,18 @@ export class FocusCamera {
   }
 
   get roomZoom(): number {
-    return fitZoom(this.cam.width, this.cam.height, this.roomRect)
+    return this.roomView().zoom
+  }
+
+  private roomView() {
+    return roomView(this.cam.width, this.cam.height, this.framing)
+  }
+
+  // Centro do foco, alinhado ao pixel da tela para o zoom final.
+  private focusView(rect: Rect) {
+    const zoom = focusZoom(this.cam.width, this.cam.height, rect, this.roomZoom)
+    const c = rectCenter(rect)
+    return { zoom, x: snapCenter(c.x, this.cam.width, zoom), y: snapCenter(c.y, this.cam.height, zoom) }
   }
 
   // Zoom até `rect` e chama `onDone` ao terminar. `rect = null` (objeto fora do mapa) não move a
@@ -58,8 +66,8 @@ export class FocusCamera {
       done()
       return true
     }
-    const center = rectCenter(rect)
-    this.animate(center.x, center.y, this.focusZoomFor(rect), done)
+    const view = this.focusView(rect)
+    this.animate(view.x, view.y, view.zoom, done)
     return true
   }
 
@@ -92,18 +100,14 @@ export class FocusCamera {
       finish()
       return
     }
-    const center = rectCenter(this.roomRect)
-    this.animate(center.x, center.y, this.roomZoom, finish)
+    const view = this.roomView()
+    this.animate(view.x, view.y, view.zoom, finish)
   }
 
   destroy() {
     this.generation++
     this.afterRelease = []
     this.scene.scale.off(Phaser.Scale.Events.RESIZE, this.onResize, this)
-  }
-
-  private focusZoomFor(rect: Rect) {
-    return focusZoom(this.cam.width, this.cam.height, rect, this.roomZoom)
   }
 
   private animate(x: number, y: number, zoom: number, onDone: () => void) {
@@ -135,14 +139,14 @@ export class FocusCamera {
   }
 
   private snapToRoom() {
-    const center = rectCenter(this.roomRect)
-    this.cam.setZoom(this.roomZoom).centerOn(center.x, center.y)
+    const view = this.roomView()
+    this.cam.setZoom(view.zoom).centerOn(view.x, view.y)
   }
 
   private snapToTarget() {
     if (!this.target) return this.snapToRoom()
-    const center = rectCenter(this.target)
-    this.cam.setZoom(this.focusZoomFor(this.target)).centerOn(center.x, center.y)
+    const view = this.focusView(this.target)
+    this.cam.setZoom(view.zoom).centerOn(view.x, view.y)
   }
 
   private onResize(gameSize: Phaser.Structs.Size) {

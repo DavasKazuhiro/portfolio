@@ -1,21 +1,31 @@
-import * as Phaser from 'phaser'
+import type * as Phaser from 'phaser'
 import { ASSETS } from '../assets'
-import { isoToScreen, tiledObjectToTileRect, TILE_H, TILE_W, type TileRect } from '../iso'
+import { tiledObjectToTileRect, TILE_W, type TileRect } from '../iso'
 import { isInteractableId, type InteractableId } from '../objects/registry'
-import type { Rect } from './cameraMath'
 
+export const SHELL_LAYER = 'room-shell'
 export const INTERACTABLES_LAYER = 'interactables'
+export const DECOR_LAYER = 'decor'
 
-export interface InteractableSpec {
-  id: InteractableId
+export interface PlacedSpec {
+  // Retângulo da pegada em tiles (objetos de parede: altura zero na borda da parede).
   footprint: TileRect
 }
+export interface InteractableSpec extends PlacedSpec {
+  id: InteractableId
+}
+export interface DecorSpec extends PlacedSpec {
+  // Nome do arquivo do sprite (chave da textura).
+  name: string
+}
 
-export interface RoomMap {
+export interface RoomMapData {
   map: Phaser.Tilemaps.Tilemap
-  // Retângulo do mundo ocupado pelo quarto (chão + paredes), para a câmera enquadrar.
-  bounds: Rect
+  // Canto superior esquerdo do image layer `room-shell` no mundo (só usado se o PNG não tiver
+  // pivot; o normal é o pivot do JSON pôr o canto do fundo na origem).
+  shellTopLeft: { x: number; y: number } | null
   interactables: InteractableSpec[]
+  decor: DecorSpec[]
 }
 
 type TiledProperty = { name: string; value: unknown }
@@ -30,42 +40,31 @@ function readProperty(properties: unknown, name: string): unknown {
   return undefined
 }
 
-// Monta todas as tile layers do .tmj e lê o object layer `interactables`.
-//
-// Alinhamento Phaser × Tiled (documentado em docs/adr/arquitetura/cena.md):
-// - O Phaser desenha cada tile com o canto superior esquerdo em (pixelX, pixelY), e o Tiled
-//   alinha tiles mais altos que o grid pelo pé. Os tiles têm 32×48, então cada camada sobe
-//   (alturaDoTile - 16) px.
-// - Cada camada também anda -16 px em x para que o vértice de cima do tile (0,0) caia na origem
-//   do mundo, igual a `isoToScreen`.
-export function buildRoomMap(scene: Phaser.Scene): RoomMap {
+function footprintOf(obj: Phaser.Types.Tilemaps.TiledObject, tileHeight: number): TileRect {
+  return tiledObjectToTileRect(
+    { x: obj.x ?? 0, y: obj.y ?? 0, width: obj.width ?? 0, height: obj.height ?? 0 },
+    tileHeight,
+  )
+}
+
+// Lê o room.tmj (ADR 0004):
+// - image layer `room-shell`: a casca do quarto (piso, paredes, sombras), desenhada como imagem;
+// - object layer `interactables`: retângulo da pegada + propriedade `id` (fallback: nome);
+// - object layer `decor`: decoração e luzes; o nome do objeto é o nome do arquivo do sprite.
+// Não há tile layers: a arte é gerada inteira (ADR 0005).
+export function readRoomMap(scene: Phaser.Scene): RoomMapData {
   const map = scene.make.tilemap({ key: ASSETS.roomMap.key })
-  const tileset = map.addTilesetImage(ASSETS.roomTiles.tileset, ASSETS.roomTiles.key)
-  if (!tileset) throw new Error(`room.tmj: tileset "${ASSETS.roomTiles.tileset}" não encontrado`)
 
-  const lift = tileset.tileHeight - map.tileHeight
-  let wallHeight = 0
-  map.layers.forEach((layerData, index) => {
-    const layer = map.createLayer(layerData.name, tileset, -TILE_W / 2, -lift)
-    if (!layer) return
-    // Quarto pequeno: sem culling (evita sumir tile alto na borda com o zoom).
-    if (layer instanceof Phaser.Tilemaps.TilemapLayer) layer.setSkipCull(true)
-    layer.setDepth(index)
-    if (layerData.name !== 'floor') wallHeight = Math.max(wallHeight, lift)
-  })
-
-  // Quarto ocupa do canto esquerdo (0, altura) ao direito (largura, 0) e sobe a altura das paredes.
-  const left = isoToScreen(0, map.height).x
-  const right = isoToScreen(map.width, 0).x
-  const top = isoToScreen(0, 0).y - wallHeight
-  const bottom = isoToScreen(map.width, map.height).y
-  const bounds = { x: left, y: top, width: right - left, height: bottom - top }
+  const shell = map.images.find((img: { name: string }) => img.name === SHELL_LAYER) as
+    | { x: number; y: number }
+    | undefined
+  if (!shell) console.warn(`room.tmj: image layer "${SHELL_LAYER}" não encontrado`)
+  // No Tiled o vértice de cima do tile (0,0) fica em x = altura do mapa × meio tile.
+  const shellTopLeft = shell ? { x: shell.x - (map.height * TILE_W) / 2, y: shell.y } : null
 
   const interactables: InteractableSpec[] = []
   const objectLayer = map.getObjectLayer(INTERACTABLES_LAYER)
-  if (!objectLayer) {
-    console.warn(`room.tmj: object layer "${INTERACTABLES_LAYER}" não encontrado`)
-  }
+  if (!objectLayer) console.warn(`room.tmj: object layer "${INTERACTABLES_LAYER}" não encontrado`)
   for (const obj of objectLayer?.objects ?? []) {
     const raw = readProperty(obj.properties, 'id') ?? obj.name
     if (typeof raw !== 'string' || !isInteractableId(raw)) {
@@ -76,13 +75,17 @@ export function buildRoomMap(scene: Phaser.Scene): RoomMap {
       console.warn(`room.tmj: id "${raw}" repetido; só o primeiro vale`)
       continue
     }
-    const width = obj.width || TILE_H
-    const height = obj.height || TILE_H
-    interactables.push({
-      id: raw,
-      footprint: tiledObjectToTileRect({ x: obj.x ?? 0, y: obj.y ?? 0, width, height }, map.tileHeight),
-    })
+    interactables.push({ id: raw, footprint: footprintOf(obj, map.tileHeight) })
   }
 
-  return { map, bounds, interactables }
+  const decor: DecorSpec[] = []
+  for (const obj of map.getObjectLayer(DECOR_LAYER)?.objects ?? []) {
+    if (!obj.name) {
+      console.warn(`room.tmj: objeto ${obj.id} do layer "${DECOR_LAYER}" sem nome; ignorado`)
+      continue
+    }
+    decor.push({ name: obj.name, footprint: footprintOf(obj, map.tileHeight) })
+  }
+
+  return { map, shellTopLeft, interactables, decor }
 }

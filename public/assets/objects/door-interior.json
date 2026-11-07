@@ -1,0 +1,91 @@
+{
+  "frames": {
+    "door-interior 0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 142
+      },
+      "duration": 1000,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "door-interior 1": {
+      "frame": {
+        "x": 64,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 142
+      },
+      "duration": 1000,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "meta": {
+    "app": "quarto-pixel tools/art",
+    "version": "1.0",
+    "image": "door-interior.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 128,
+      "h": 142
+    },
+    "scale": "1",
+    "frameTags": [
+      {
+        "direction": "forward",
+        "name": "day",
+        "from": 0,
+        "to": 0
+      },
+      {
+        "direction": "forward",
+        "name": "night",
+        "from": 1,
+        "to": 1
+      }
+    ],
+    "layers": [],
+    "slices": [],
+    "quartoPixel": {
+      "anchor": [
+        0,
+        0
+      ],
+      "at": [
+        128,
+        22
+      ]
+    }
+  }
+}

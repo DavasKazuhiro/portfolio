@@ -29,10 +29,11 @@
 | `object-open` | Phaser → React | id (emitido **depois** do zoom terminar) |
 | `panel-closed` | React → Phaser | — (dispara zoom-out) |
 | `focus-object` | React → Phaser | id (menu de teclado pede o zoom; a cena responde com `object-open`) |
+| `period-changed` | Phaser → React | `day`, `dusk` ou `night` (na criação do quarto e a cada minuto; a visão de perto usa o do momento da abertura) |
 
 Fluxo único de abertura: clique no canvas **ou** `focus-object` → zoom da câmera → `object-open` → painel. Se `prefers-reduced-motion`, o zoom é instantâneo.
 
-Novos eventos previstos: `time-of-day`, `audio-toggle`.
+Novo evento previsto: `audio-toggle`.
 
 ## Interação por dispositivo
 | Ação | Desktop | Teclado | Mobile |

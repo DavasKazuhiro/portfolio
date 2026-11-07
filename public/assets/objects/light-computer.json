@@ -1,0 +1,139 @@
+{
+  "frames": {
+    "light-computer 0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 252,
+        "h": 138
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 252,
+        "h": 138
+      },
+      "sourceSize": {
+        "w": 252,
+        "h": 138
+      },
+      "duration": 500,
+      "pivot": {
+        "x": 0.48412698412698413,
+        "y": 0.7971014492753623
+      }
+    },
+    "light-computer 1": {
+      "frame": {
+        "x": 252,
+        "y": 0,
+        "w": 252,
+        "h": 138
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 252,
+        "h": 138
+      },
+      "sourceSize": {
+        "w": 252,
+        "h": 138
+      },
+      "duration": 500,
+      "pivot": {
+        "x": 0.48412698412698413,
+        "y": 0.7971014492753623
+      }
+    },
+    "light-computer 2": {
+      "frame": {
+        "x": 504,
+        "y": 0,
+        "w": 252,
+        "h": 138
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 252,
+        "h": 138
+      },
+      "sourceSize": {
+        "w": 252,
+        "h": 138
+      },
+      "duration": 500,
+      "pivot": {
+        "x": 0.48412698412698413,
+        "y": 0.7971014492753623
+      }
+    },
+    "light-computer 3": {
+      "frame": {
+        "x": 756,
+        "y": 0,
+        "w": 252,
+        "h": 138
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 252,
+        "h": 138
+      },
+      "sourceSize": {
+        "w": 252,
+        "h": 138
+      },
+      "duration": 500,
+      "pivot": {
+        "x": 0.48412698412698413,
+        "y": 0.7971014492753623
+      }
+    }
+  },
+  "meta": {
+    "app": "quarto-pixel tools/art",
+    "version": "1.0",
+    "image": "light-computer.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 1008,
+      "h": 138
+    },
+    "scale": "1",
+    "frameTags": [
+      {
+        "direction": "forward",
+        "name": "night",
+        "from": 0,
+        "to": 3
+      }
+    ],
+    "layers": [],
+    "slices": [],
+    "quartoPixel": {
+      "anchor": [
+        122,
+        110
+      ],
+      "tile": [
+        2,
+        2
+      ],
+      "layerOf": "computer",
+      "light": true,
+      "syncFramesWith": "computer",
+      "hit": "none"
+    }
+  }
+}

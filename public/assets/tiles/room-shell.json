@@ -1,0 +1,70 @@
+{
+  "frames": {
+    "room-shell 0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 472,
+        "h": 386
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 472,
+        "h": 386
+      },
+      "sourceSize": {
+        "w": 472,
+        "h": 386
+      },
+      "duration": 1000,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.40414507772020725
+      }
+    }
+  },
+  "meta": {
+    "app": "quarto-pixel tools/art",
+    "version": "1.0",
+    "image": "room-shell.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 472,
+      "h": 386
+    },
+    "scale": "1",
+    "frameTags": [
+      {
+        "direction": "forward",
+        "name": "idle",
+        "from": 0,
+        "to": 0
+      }
+    ],
+    "layers": [],
+    "slices": [],
+    "quartoPixel": {
+      "anchor": [
+        236,
+        156
+      ],
+      "tile": [
+        0,
+        0
+      ],
+      "mount": "floor",
+      "footprint": [
+        [
+          0,
+          0,
+          7,
+          7
+        ]
+      ],
+      "hit": "none"
+    }
+  }
+}

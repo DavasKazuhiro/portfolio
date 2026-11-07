@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { isoToScreen, TILE_H, tiledObjectToTileRect } from '@/game/iso'
+import { isoToScreen, TILE_H, TILE_W, tiledObjectToTileRect, tileRectCenter, unitsToScreen } from '@/game/iso'
 import { isInteractableId } from '@/game/objects/registry'
 import {
   clampZoom,
@@ -84,40 +84,90 @@ describe('cameraMath.rectCenter / padRect', () => {
 })
 
 describe('iso', () => {
-  it('isoToScreen: vértice de cima do tile (0,0) na origem', () => {
-    expect(isoToScreen(0, 0)).toEqual({ x: 0, y: 0 })
-    expect(isoToScreen(1, 0)).toEqual({ x: 16, y: 8 })
-    expect(isoToScreen(0, 1)).toEqual({ x: -16, y: 8 })
-    expect(isoToScreen(2.5, 3.5)).toEqual({ x: -16, y: 48 })
+  it('tile 64×32 (ADR 0005)', () => {
+    expect(TILE_W).toBe(64)
+    expect(TILE_H).toBe(32)
   })
 
-  it('tiledObjectToTileRect: 1 tile = tileHeight unidades nos dois eixos', () => {
-    // O computador do room.tmj: x=32, y=0, 32×16 → tiles (2,0)–(4,1)
-    expect(tiledObjectToTileRect({ x: 32, y: 0, width: 32, height: 16 })).toEqual({ x0: 2, y0: 0, x1: 4, y1: 1 })
+  it('isoToScreen: vértice de cima do tile (0,0) na origem', () => {
+    expect(isoToScreen(0, 0)).toEqual({ x: 0, y: 0 })
+    expect(isoToScreen(1, 0)).toEqual({ x: 32, y: 16 })
+    expect(isoToScreen(0, 1)).toEqual({ x: -32, y: 16 })
+    expect(isoToScreen(2.5, 3.5)).toEqual({ x: -32, y: 96 })
+    // Canto da frente do quarto 7×7.
+    expect(isoToScreen(7, 7)).toEqual({ x: 0, y: 224 })
+  })
+
+  it('isoToScreen: centros de tile caem em pixel inteiro', () => {
+    for (let c = 0; c < 7; c++) {
+      for (let r = 0; r < 7; r++) {
+        const p = isoToScreen(c + 0.5, r + 0.5)
+        expect(Number.isInteger(p.x) && Number.isInteger(p.y), `tile (${c},${r})`).toBe(true)
+      }
+    }
+  })
+
+  it('unitsToScreen: 8 unidades = 1 tile; z sobe 2 px por unidade', () => {
+    expect(unitsToScreen(8, 0)).toEqual(isoToScreen(1, 0))
+    expect(unitsToScreen(16, 24)).toEqual(isoToScreen(2, 3))
+    expect(unitsToScreen(0, 0, 10)).toEqual({ x: 0, y: -20 })
+  })
+
+  it('tiledObjectToTileRect: 1 tile = tileHeight (32) unidades nos dois eixos', () => {
+    // O computador do room.tmj: x=0, y=0, 128×128 → tiles (0,0)–(4,4)
+    expect(tiledObjectToTileRect({ x: 0, y: 0, width: 128, height: 128 })).toEqual({ x0: 0, y0: 0, x1: 4, y1: 4 })
+    // pc-tower: x=128, y=0, 32×32 → tile (4,0)–(5,1)
+    expect(tiledObjectToTileRect({ x: 128, y: 0, width: 32, height: 32 })).toEqual({ x0: 4, y0: 0, x1: 5, y1: 1 })
   })
   it('tiledObjectToTileRect: aceita frações e tileHeight custom', () => {
-    expect(tiledObjectToTileRect({ x: 8, y: 24, width: 8, height: 8 })).toEqual({ x0: 0.5, y0: 1.5, x1: 1, y1: 2 })
-    expect(tiledObjectToTileRect({ x: 64, y: 32, width: 32, height: 32 }, 32)).toEqual({ x0: 2, y0: 1, x1: 3, y1: 2 })
+    expect(tiledObjectToTileRect({ x: 16, y: 48, width: 16, height: 16 })).toEqual({ x0: 0.5, y0: 1.5, x1: 1, y1: 2 })
+    expect(tiledObjectToTileRect({ x: 32, y: 16, width: 16, height: 16 }, 16)).toEqual({ x0: 2, y0: 1, x1: 3, y1: 2 })
   })
   it('tiledObjectToTileRect: objeto de tamanho zero vira ponto', () => {
-    const r = tiledObjectToTileRect({ x: 16, y: 16, width: 0, height: 0 }, TILE_H)
+    const r = tiledObjectToTileRect({ x: 32, y: 32, width: 0, height: 0 }, TILE_H)
     expect(r).toEqual({ x0: 1, y0: 1, x1: 1, y1: 1 })
+  })
+  it('tileRectCenter: centro da pegada', () => {
+    expect(tileRectCenter({ x0: 0, y0: 0, x1: 4, y1: 4 })).toEqual({ col: 2, row: 2 })
+    // Objeto de parede (altura zero): centro na borda.
+    expect(tileRectCenter({ x0: 5, y0: 0, x1: 6.5, y1: 0 })).toEqual({ col: 5.75, row: 0 })
   })
 })
 
 describe('public/maps/room.tmj', () => {
   type TiledObject = { id: number; name: string; x: number; y: number; width: number; height: number; properties?: { name: string; value: unknown }[] }
-  type Layer = { name: string; type: string; objects?: TiledObject[] }
-  const map = JSON.parse(roomRaw) as { orientation: string; tilewidth: number; tileheight: number; width: number; height: number; layers: Layer[] }
+  type Layer = { name: string; type: string; image?: string; objects?: TiledObject[] }
+  const map = JSON.parse(roomRaw) as {
+    orientation: string
+    tilewidth: number
+    tileheight: number
+    width: number
+    height: number
+    layers: Layer[]
+    tilesets: unknown[]
+  }
   const layer = map.layers.find((l) => l.name === 'interactables')
   // Mesma regra de RoomMap.ts: propriedade `id` e, na falta dela, o nome do objeto.
   const idOf = (o: TiledObject) => o.properties?.find((p) => p.name === 'id')?.value ?? o.name
 
-  it('é isométrico 32×16 com o object layer "interactables"', () => {
+  it('é isométrico 64×32, 7×7, com o object layer "interactables"', () => {
     expect(map.orientation).toBe('isometric')
-    expect(map.tilewidth).toBe(32)
-    expect(map.tileheight).toBe(16)
+    expect(map.tilewidth).toBe(TILE_W)
+    expect(map.tileheight).toBe(TILE_H)
+    expect(map.width).toBe(7)
+    expect(map.height).toBe(7)
     expect(layer?.type).toBe('objectgroup')
+  })
+
+  it('casca no image layer "room-shell", decor em object layer e nenhum tileset (ADR 0005)', () => {
+    expect(map.tilesets).toEqual([])
+    expect(map.layers.some((l) => l.type === 'tilelayer')).toBe(false)
+    const shell = map.layers.find((l) => l.name === 'room-shell')
+    expect(shell?.type).toBe('imagelayer')
+    expect(shell?.image).toBe('../assets/tiles/room-shell.png')
+    expect(map.layers.find((l) => l.name === 'decor')?.type).toBe('objectgroup')
+    // Ordem de desenho: casca, decor, interagíveis.
+    expect(map.layers.map((l) => l.name)).toEqual(['room-shell', 'decor', 'interactables'])
   })
 
   it('todo id do layer interactables passa em isInteractableId', () => {
@@ -139,8 +189,9 @@ describe('public/maps/room.tmj', () => {
     }
   })
 
-  it('footprints ficam dentro do mapa', () => {
-    for (const o of layer?.objects ?? []) {
+  it('footprints (interagíveis e decor) ficam dentro do mapa 7×7', () => {
+    const decor = map.layers.find((l) => l.name === 'decor')?.objects ?? []
+    for (const o of [...(layer?.objects ?? []), ...decor]) {
       const r = tiledObjectToTileRect(o, map.tileheight)
       expect(r.x0).toBeGreaterThanOrEqual(0)
       expect(r.y0).toBeGreaterThanOrEqual(0)

@@ -1,0 +1,307 @@
+{
+  "frames": {
+    "door 0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 142
+      },
+      "duration": 1000,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "door 1": {
+      "frame": {
+        "x": 64,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 142
+      },
+      "duration": 70,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "door 2": {
+      "frame": {
+        "x": 128,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 142
+      },
+      "duration": 70,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "door 3": {
+      "frame": {
+        "x": 192,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 142
+      },
+      "duration": 80,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "door 4": {
+      "frame": {
+        "x": 256,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 142
+      },
+      "duration": 120,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "door 5": {
+      "frame": {
+        "x": 320,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 142
+      },
+      "duration": 1000,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "door 6": {
+      "frame": {
+        "x": 384,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 142
+      },
+      "duration": 70,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "door 7": {
+      "frame": {
+        "x": 448,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 142
+      },
+      "duration": 70,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "door 8": {
+      "frame": {
+        "x": 512,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 142
+      },
+      "duration": 80,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "door 9": {
+      "frame": {
+        "x": 576,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 142
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 142
+      },
+      "duration": 120,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "meta": {
+    "app": "quarto-pixel tools/art",
+    "version": "1.0",
+    "image": "door.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 640,
+      "h": 142
+    },
+    "scale": "1",
+    "frameTags": [
+      {
+        "direction": "forward",
+        "name": "closed",
+        "from": 0,
+        "to": 0
+      },
+      {
+        "direction": "forward",
+        "name": "open",
+        "from": 1,
+        "to": 4
+      },
+      {
+        "direction": "forward",
+        "name": "closed-night",
+        "from": 5,
+        "to": 5
+      },
+      {
+        "direction": "forward",
+        "name": "open-night",
+        "from": 6,
+        "to": 9
+      }
+    ],
+    "layers": [],
+    "slices": [],
+    "quartoPixel": {
+      "anchor": [
+        0,
+        0
+      ],
+      "at": [
+        128,
+        22
+      ],
+      "preTinted": [
+        "closed-night",
+        "open-night"
+      ]
+    }
+  }
+}

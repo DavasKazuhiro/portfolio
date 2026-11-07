@@ -13,7 +13,7 @@ Consequência: a experiência é lúdica, mas **nunca esconde o essencial**. Too
 | Tema | Decisão |
 |---|---|
 | Visão | Isométrico 2D, câmera fixa com zoom/pan |
-| Assets | Asset pack livre (licença compatível) + objetos únicos customizados |
+| Assets | Arte própria gerada por código (`tools/art/`), estilo isométrico tipo Habbo, tile 64×32 — ver [ADR 0005](adr/0005-arte-propria-gerada-por-codigo.md) |
 | Idiomas | PT-BR (padrão) + EN, com toggle |
 | Interação | Zoom da câmera no objeto + UI temática por objeto |
 | Extras | Porta do quarto como tela de entrada (abre para revelar o quarto), música + SFX (mudo por padrão), dia/noite pelo horário real, avatar/pet animado |

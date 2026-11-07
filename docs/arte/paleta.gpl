@@ -1,0 +1,54 @@
+GIMP Palette
+Name: Quarto Pixel
+Columns: 8
+#
+# Paleta oficial do "Quarto Pixel" (48 cores). Fonte da verdade: docs/arte/biblia-de-arte.md.
+# Importar no Piskel (Paletas > Importar) ou no LibreSprite (Paleta > Carregar).
+ 42  27  42	outline
+ 31  28  40	graphite-0
+ 47  44  58	graphite-1
+ 74  70  89	graphite-2
+ 93  88 117	graphite-3
+ 90  46  34	wood-0
+122  71  43	wood-1
+151  80  44	wood-2
+171 105  58	wood-3
+184 115  62	wood-4
+200 113  56	wood-5
+211 146  88	wood-lit
+232 148  74	wood-6
+255 194 122	wood-7
+192 154  69	gold-0
+233 196 106	gold-1
+244 184  96	gold-2
+246 220 143	gold-3
+ 74  50  64	mauve-0
+109  85  96	mauve-1
+131 106 117	mauve-2
+147 169 174	wall-0
+159 183 189	wall-1
+169 193 198	wall-2
+191 207 210	wall-3
+201 216 218	wall-4
+220 231 232	wall-5
+167 159 148	cream-0
+200 184 156	cream-1
+231 225 216	cream-2
+246 242 236	cream-3
+ 94 196 214	sky-0
+143 211 232	sky-1
+198 246 251	sky-2
+ 19  47  61	teal-0
+ 31  74  92	teal-1
+ 43  95 116	teal-2
+ 95 151 163	teal-3
+131  48  58	red-0
+176  64  73	red-1
+200  79  87	red-2
+217 102 106	red-3
+227 120 154	pink
+ 58  95 140	blue-0
+ 79 127 184	blue-1
+ 62 126  58	leaf-0
+ 95 174  78	leaf-1
+154 216 111	leaf-2

@@ -19,3 +19,6 @@ playwright-report
 !.vscode/extensions.json
 .idea
 .DS_Store
+
+# Capturas e scripts locais do Playwright MCP
+.playwright-mcp

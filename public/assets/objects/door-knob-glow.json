@@ -1,0 +1,85 @@
+{
+  "frames": {
+    "door-knob-glow 0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 12
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 12
+      },
+      "sourceSize": {
+        "w": 12,
+        "h": 12
+      },
+      "duration": 300,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "door-knob-glow 1": {
+      "frame": {
+        "x": 12,
+        "y": 0,
+        "w": 12,
+        "h": 12
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 12
+      },
+      "sourceSize": {
+        "w": 12,
+        "h": 12
+      },
+      "duration": 300,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "meta": {
+    "app": "quarto-pixel tools/art",
+    "version": "1.0",
+    "image": "door-knob-glow.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 24,
+      "h": 12
+    },
+    "scale": "1",
+    "frameTags": [
+      {
+        "direction": "forward",
+        "name": "hover",
+        "from": 0,
+        "to": 1
+      }
+    ],
+    "layers": [],
+    "slices": [],
+    "quartoPixel": {
+      "anchor": [
+        0,
+        0
+      ],
+      "at": [
+        177,
+        91
+      ]
+    }
+  }
+}

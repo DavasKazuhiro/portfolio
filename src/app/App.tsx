@@ -11,10 +11,11 @@ export function App() {
   const { i18n } = useTranslation()
 
   useEffect(() => {
-    const { setSceneKey, setHovered, open } = useGameStore.getState()
+    const { setSceneKey, setHovered, open, setPeriod } = useGameStore.getState()
     const offs = [
       EventBus.on('scene-ready', setSceneKey),
       EventBus.on('object-hover', setHovered),
+      EventBus.on('period-changed', setPeriod),
       EventBus.on('object-open', (id) => {
         cancelPendingOpen()
         open(id)

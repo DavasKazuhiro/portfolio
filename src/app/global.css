@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;700&display=swap');
 
 :root {
+  --teal-0: #132f3d; /* tela ligada (bíblia: teal-0) */
+  --teal-1: #1f4a5c;
+  --teal-2: #2b5f74;
   --bg: #1b1526;
   --ink: #f3e9d2;
   --accent: #f4b860;
@@ -94,7 +97,7 @@ html, body, #root { margin: 0; height: 100%; overflow: hidden; }
   border-bottom: 4px solid var(--border);
   padding: 4px 4px 4px 12px;
 }
-.retro-window__title { margin: 0; flex: 1; font-size: 1.1rem; font-weight: 700; }
+.retro-window__title { margin: 0; flex: 1; font-size: 1.1em; font-weight: 700; }
 .retro-window__close {
   font: inherit; font-weight: 700;
   min-width: 32px; min-height: 32px;
@@ -106,21 +109,23 @@ html, body, #root { margin: 0; height: 100%; overflow: hidden; }
 .retro-window__close:hover, .retro-window__close:focus-visible {
   color: var(--accent); outline: 3px solid var(--border); outline-offset: 0;
 }
+/* Na tela do monitor (barra teal-2) o contorno escuro some: ink dá 5,8:1. */
+.closeup__screen .retro-window__close:focus-visible { outline-color: var(--ink); }
 .retro-window__address {
   margin: 8px 8px 0; padding: 4px 8px;
   background: var(--border); color: var(--cyan);
-  font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-size: 0.9em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .retro-window__body { flex: 1; min-height: 0; overflow: auto; padding: 12px; }
 .retro-window__status {
   border-top: 4px solid var(--border);
-  padding: 4px 12px; font-size: 0.9rem;
+  padding: 4px 12px; font-size: 0.9em;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
 .folder-grid {
   list-style: none; margin: 0; padding: 0;
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(136px, 1fr)); gap: 8px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(8.5em, 100%), 1fr)); gap: 8px;
 }
 .folder {
   font: inherit; color: var(--ink);
@@ -139,10 +144,10 @@ html, body, #root { margin: 0; height: 100%; overflow: hidden; }
 .badge {
   display: inline-block; padding: 0 6px;
   background: var(--accent); color: var(--border);
-  border: 2px solid var(--border); font-size: 0.8rem; font-weight: 700;
+  border: 2px solid var(--border); font-size: max(12px, 0.8em); font-weight: 700;
 }
 
-.project-detail h3 { margin: 0; color: var(--accent); font-size: 1.25rem; }
+.project-detail h3 { margin: 0; color: var(--accent); font-size: 1.25em; }
 .project-detail h4 { margin: 16px 0 6px; color: var(--cyan); }
 .project-detail p { line-height: 1.5; }
 .project-detail__heading { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
@@ -150,6 +155,67 @@ html, body, #root { margin: 0; height: 100%; overflow: hidden; }
 .tech-list li { padding: 2px 8px; background: var(--border); color: var(--cyan); border: 2px solid var(--cyan); }
 .project-detail__link { display: inline-block; margin-top: 16px; text-decoration: none; }
 .project-detail__nolink { margin-top: 16px; font-style: italic; }
+
+/* ---------- Visão de perto (ADR 0006, specs.md §3) ---------- */
+/* Modos A/B: ilustração em escala inteira (posições calculadas em layout.ts, px CSS inteiros) e
+   o diálogo absoluto sobre a área de conteúdo. Modo C: moldura 9-slice (border-image) em volta. */
+.closeup {
+  position: fixed; inset: 0; z-index: 10;
+  background: rgba(15, 11, 23, 0.92); /* --border quase opaco */
+  overflow: hidden;
+}
+.closeup__view { position: absolute; overflow: hidden; }
+.closeup__art {
+  position: absolute; max-width: none;
+  image-rendering: pixelated;
+  user-select: none; pointer-events: none;
+}
+.closeup__screen {
+  position: absolute;
+  display: flex; flex-direction: column;
+  font-size: var(--screen-font, 16px);
+  background: var(--teal-0);
+  outline: none;
+}
+.closeup__screen:focus-visible { box-shadow: inset 0 0 0 3px var(--cyan); }
+.closeup__screen > * { flex: 1; min-height: 0; }
+.closeup__screen--booting > * { opacity: 0; }
+.closeup--C .closeup__screen {
+  inset: 72px 16px 16px; /* deixa a faixa do HUD livre */
+  image-rendering: pixelated;
+}
+@media (max-width: 767px) {
+  .closeup--C .closeup__screen { inset: 0; } /* tela cheia; o HUD fica por baixo (como no M1) */
+}
+
+/* O painel dentro da tela: sem moldura própria (a do monitor já é a borda), fundo teal-0. */
+.closeup__screen .retro-window,
+.closeup__screen .panel {
+  background: var(--teal-0); border: 0; box-shadow: none;
+  max-height: none; height: 100%;
+}
+.closeup__screen .retro-window__titlebar {
+  background: var(--teal-2); color: var(--ink);
+  border-bottom-color: var(--teal-1);
+}
+.closeup__screen .retro-window__status { border-top-color: var(--teal-1); }
+.closeup__screen .folder:hover,
+.closeup__screen .folder:focus-visible { background: var(--teal-1); }
+/* Ícone da pasta em múltiplo inteiro do seu grid de 16×12. */
+.closeup__screen .folder-icon {
+  width: calc(16px * var(--icon-k, 2)); height: calc(12px * var(--icon-k, 2));
+}
+
+/* Vapor da caneca: frames lado a lado, andando em degraus (desligado com reduced motion). */
+.closeup__steam { position: absolute; overflow: hidden; pointer-events: none; }
+.closeup__steam img { position: absolute; left: 0; top: 0; max-width: none; image-rendering: pixelated; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .closeup__steam img { animation: closeup-steam var(--steam-ms) steps(var(--steam-steps)) infinite; }
+  .closeup { animation: closeup-in 120ms steps(3, end); }
+}
+@keyframes closeup-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes closeup-steam { to { transform: translateX(var(--steam-shift)); } }
 
 /* Escondido visualmente, lido por leitor de tela (diferente do .sr-only do menu, que aparece com foco). */
 .visually-hidden {

@@ -1,5 +1,6 @@
 import * as Phaser from 'phaser'
-import { ASSETS, PALETTE } from '../assets'
+import { ASSETS, PALETTE, ROOM_SPRITES } from '../assets'
+import { createMissingStandIns } from '../objects/standins'
 
 // Barra de progresso "em pixel": blocos de tamanho inteiro, sem texto (texto é da UI/i18n).
 const BAR_CELLS = 32
@@ -30,10 +31,16 @@ export class Preload extends Phaser.Scene {
     })
 
     this.load.tilemapTiledJSON(ASSETS.roomMap.key, ASSETS.roomMap.url)
-    this.load.image(ASSETS.roomTiles.key, ASSETS.roomTiles.url)
+    // Sprites gerados: PNG + JSON Hash do Aseprite (pivot e meta.quartoPixel no JSON).
+    for (const [key, base] of Object.entries(ROOM_SPRITES)) {
+      this.load.aseprite(key, `${base}.png`, `${base}.json`)
+    }
   }
 
   create() {
+    // Arte que ainda não chegou vira stand-in com o mesmo contrato (avisado no console em dev).
+    const standIns = createMissingStandIns(this)
+    if (standIns.length && import.meta.env.DEV) console.info(`[quarto] stand-ins: ${standIns.join(', ')}`)
     this.scene.start('Room')
   }
 }

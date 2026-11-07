@@ -1,0 +1,332 @@
+{
+  "frames": {
+    "closeup-computer 0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 320,
+        "h": 180
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 320,
+        "h": 180
+      },
+      "sourceSize": {
+        "w": 320,
+        "h": 180
+      },
+      "duration": 1000,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "closeup-computer 1": {
+      "frame": {
+        "x": 320,
+        "y": 0,
+        "w": 320,
+        "h": 180
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 320,
+        "h": 180
+      },
+      "sourceSize": {
+        "w": 320,
+        "h": 180
+      },
+      "duration": 60,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "closeup-computer 2": {
+      "frame": {
+        "x": 640,
+        "y": 0,
+        "w": 320,
+        "h": 180
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 320,
+        "h": 180
+      },
+      "sourceSize": {
+        "w": 320,
+        "h": 180
+      },
+      "duration": 60,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "closeup-computer 3": {
+      "frame": {
+        "x": 960,
+        "y": 0,
+        "w": 320,
+        "h": 180
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 320,
+        "h": 180
+      },
+      "sourceSize": {
+        "w": 320,
+        "h": 180
+      },
+      "duration": 1000,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "closeup-computer 4": {
+      "frame": {
+        "x": 1280,
+        "y": 0,
+        "w": 320,
+        "h": 180
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 320,
+        "h": 180
+      },
+      "sourceSize": {
+        "w": 320,
+        "h": 180
+      },
+      "duration": 1000,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "closeup-computer 5": {
+      "frame": {
+        "x": 1600,
+        "y": 0,
+        "w": 320,
+        "h": 180
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 320,
+        "h": 180
+      },
+      "sourceSize": {
+        "w": 320,
+        "h": 180
+      },
+      "duration": 60,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "closeup-computer 6": {
+      "frame": {
+        "x": 1920,
+        "y": 0,
+        "w": 320,
+        "h": 180
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 320,
+        "h": 180
+      },
+      "sourceSize": {
+        "w": 320,
+        "h": 180
+      },
+      "duration": 60,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "closeup-computer 7": {
+      "frame": {
+        "x": 2240,
+        "y": 0,
+        "w": 320,
+        "h": 180
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 320,
+        "h": 180
+      },
+      "sourceSize": {
+        "w": 320,
+        "h": 180
+      },
+      "duration": 1000,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "meta": {
+    "app": "quarto-pixel tools/art",
+    "version": "1.0",
+    "image": "closeup-computer.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 2560,
+      "h": 180
+    },
+    "scale": "1",
+    "frameTags": [
+      {
+        "direction": "forward",
+        "name": "off",
+        "from": 0,
+        "to": 0
+      },
+      {
+        "direction": "forward",
+        "name": "boot",
+        "from": 1,
+        "to": 2
+      },
+      {
+        "direction": "forward",
+        "name": "on",
+        "from": 3,
+        "to": 3
+      },
+      {
+        "direction": "forward",
+        "name": "off-night",
+        "from": 4,
+        "to": 4
+      },
+      {
+        "direction": "forward",
+        "name": "boot-night",
+        "from": 5,
+        "to": 6
+      },
+      {
+        "direction": "forward",
+        "name": "on-night",
+        "from": 7,
+        "to": 7
+      }
+    ],
+    "layers": [],
+    "slices": [],
+    "quartoPixel": {
+      "anchor": [
+        0,
+        0
+      ],
+      "size": [
+        320,
+        180
+      ],
+      "contentRect": [
+        48,
+        11,
+        224,
+        126
+      ],
+      "crops": {
+        "full": [
+          0,
+          0,
+          320,
+          180
+        ],
+        "monitor": [
+          36,
+          0,
+          248,
+          180
+        ]
+      },
+      "minContentCss": [
+        640,
+        360
+      ],
+      "minScale": 3,
+      "monitorRect": [
+        40,
+        2,
+        240,
+        150
+      ],
+      "panelBackground": "#132f3d",
+      "preTinted": [
+        "off-night",
+        "boot-night",
+        "on-night"
+      ],
+      "steam": {
+        "image": "closeup-computer-steam.png",
+        "json": "closeup-computer-steam.json",
+        "at": [
+          68,
+          134
+        ]
+      },
+      "frame9": {
+        "image": "closeup-computer-frame.png",
+        "size": [
+          48,
+          48
+        ],
+        "slices": {
+          "left": 8,
+          "top": 9,
+          "right": 8,
+          "bottom": 15
+        },
+        "center": "#132f3d"
+      },
+      "deskStrip": {
+        "image": "closeup-computer-desk.png",
+        "size": [
+          32,
+          24
+        ],
+        "repeat": "x"
+      }
+    }
+  }
+}

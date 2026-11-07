@@ -1,5 +1,6 @@
 import * as Phaser from 'phaser'
 import type { InteractableId } from './objects/registry'
+import type { Period } from './systems/period'
 
 // Contrato entre o canvas (Phaser) e a UI (React). Todo evento novo entra aqui.
 export interface GameEvents {
@@ -9,6 +10,8 @@ export interface GameEvents {
   'panel-closed': []
   // React → Phaser: pede o zoom no objeto (menu de teclado); a cena responde com 'object-open'.
   'focus-object': [id: InteractableId]
+  // Phaser → React: período de luz do quarto (na criação e a cada reavaliação), para a visão de perto seguir o quarto.
+  'period-changed': [period: Period]
 }
 
 const emitter = new Phaser.Events.EventEmitter()

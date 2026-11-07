@@ -4,6 +4,8 @@ import type { InteractableId } from '@/game/objects/registry'
 import { useGameStore } from '@/store/useGameStore'
 import { takeRememberedFocus } from '@/ui/a11y/focusReturn'
 import { useFocusTrap } from '@/ui/a11y/useFocusTrap'
+import { Closeup } from '@/ui/closeup/Closeup'
+import { CLOSEUPS, loadCloseup } from '@/ui/closeup/useCloseupSheet'
 import { closePanel } from './closePanel'
 import { GenericPanel } from './GenericPanel'
 import type { PanelProps } from './types'
@@ -22,6 +24,11 @@ export function PanelHost() {
   const dialogRef = useRef<HTMLDivElement>(null)
 
   useFocusTrap(dialogRef, openId !== null)
+
+  // Pré-carrega as ilustrações das visões de perto (são pequenas) para o boot entrar na abertura.
+  useEffect(() => {
+    for (const id of Object.keys(CLOSEUPS) as InteractableId[]) void loadCloseup(id)
+  }, [])
 
   // Guarda quem abriu e devolve o foco quando o diálogo desmonta.
   useEffect(() => {
@@ -46,6 +53,33 @@ export function PanelHost() {
   if (!openId) return null
 
   const Panel = PANELS[openId] ?? GenericPanel
+  const dialogProps = {
+    role: 'dialog',
+    'aria-modal': true,
+    'aria-labelledby': TITLE_ID,
+    tabIndex: -1,
+  } as const
+  const content = (
+    <Suspense
+      fallback={
+        <div className="panel" role="status">
+          <h2 id={TITLE_ID}>{t(`objects.${openId}`)}</h2>
+          <p>{t('panel.loading')}</p>
+        </div>
+      }
+    >
+      <Panel titleId={TITLE_ID} onClose={closePanel} />
+    </Suspense>
+  )
+
+  // Objetos com visão de perto: ilustração frontal + painel dentro da área de conteúdo.
+  if (CLOSEUPS[openId]) {
+    return (
+      <Closeup key={openId} id={openId} dialogRef={dialogRef} dialogProps={dialogProps} onOutsideClick={closePanel}>
+        {content}
+      </Closeup>
+    )
+  }
 
   return (
     <div
@@ -54,24 +88,8 @@ export function PanelHost() {
         if (e.target === e.currentTarget) closePanel()
       }}
     >
-      <div
-        ref={dialogRef}
-        className={`panel-dialog panel-dialog--${openId}`}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={TITLE_ID}
-        tabIndex={-1}
-      >
-        <Suspense
-          fallback={
-            <div className="panel" role="status">
-              <h2 id={TITLE_ID}>{t(`objects.${openId}`)}</h2>
-              <p>{t('panel.loading')}</p>
-            </div>
-          }
-        >
-          <Panel titleId={TITLE_ID} onClose={closePanel} />
-        </Suspense>
+      <div ref={dialogRef} className={`panel-dialog panel-dialog--${openId}`} {...dialogProps}>
+        {content}
       </div>
     </div>
   )

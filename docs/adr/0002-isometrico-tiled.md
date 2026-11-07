@@ -1,6 +1,6 @@
 # ADR 0002 — Quarto isométrico 2:1 montado no Tiled
 
-- **Status:** aceito (2026-10-25)
+- **Status:** aceito (2026-10-25); tamanho do tile substituído pelo [ADR 0005](0005-arte-propria-gerada-por-codigo.md) (64×32)
 
 ## Contexto
 O quarto deve parecer "3D" em pixel art e aceitar novos objetos sem mexer no código do motor.

@@ -1,11 +1,38 @@
 import * as Phaser from 'phaser'
+import { ROOM_SPRITES } from '../assets'
 import { EventBus } from '../EventBus'
+import { isoToScreen, tileRectCenter } from '../iso'
 import { Interactable } from '../objects/Interactable'
 import type { InteractableId } from '../objects/registry'
+import { readQuartoPixel } from '../objects/spriteMeta'
+import { padRect, type Rect, type RoomFraming } from '../systems/cameraMath'
 import { FocusCamera } from '../systems/FocusCamera'
-import { buildRoomMap } from '../systems/RoomMap'
+import { DayNight } from '../systems/DayNight'
+import { parsePeriod, periodAt, type Period } from '../systems/period'
+import { readRoomMap, type PlacedSpec } from '../systems/RoomMap'
 
-// O quarto: mapa do Tiled + objetos interagíveis + câmera de foco.
+// Profundidades (docs/arte/planta-do-quarto.md, "Leitura e oclusão"):
+// casca do quarto < luz no piso < objetos de parede < objetos de chão (por col + row da âncora).
+const DEPTH = {
+  shell: 0,
+  shellLayer: 1,
+  wall: 5,
+  floor: 10,
+} as const
+const LAYER_STEP = 0.01
+
+// Margem em volta do quarto na visão geral (px do mundo).
+const ROOM_PADDING = 8
+// Linha de segurança das paredes (planta-do-quarto.md): nenhum interagível passa de 112 px de
+// altura nem fica a menos de 1,5 tile do canto do fundo no alto da parede.
+const WALL_SAFE_HEIGHT = 112
+const WALL_SAFE_OFFSET_TILES = 1.5
+// 1 px de outline + 1 px de folga em volta do interagível mais alto.
+const SAFE_MARGIN = 2
+// O período é reavaliado a cada minuto (horário local do visitante).
+const PERIOD_CHECK_MS = 60_000
+
+// O quarto: room-shell + objetos do Tiled + câmera de foco.
 //
 // Fluxo de abertura (único para clique e para 'focus-object' vindo da UI):
 //   zoom da câmera → 'object-open' (uma vez por foco) → painel abre na UI.
@@ -16,22 +43,55 @@ export class Room extends Phaser.Scene {
   private hoveredId: InteractableId | null = null
   private queuedFocus: InteractableId | null = null
   private unsubscribers: Array<() => void> = []
+  private dayNight?: DayNight
+  // Período forçado pela URL (só em dev): `?period=day|dusk|night`.
+  private forcedPeriod: Period | null = null
 
   constructor() {
     super('Room')
   }
 
   create() {
-    const room = buildRoomMap(this)
-    this.focusCam = new FocusCamera(this, room.bounds)
+    // Quem está por cima recebe o clique (o caderno sobre o computador, no M3).
+    this.input.topOnly = true
+    if (import.meta.env.DEV) this.forcedPeriod = parsePeriod(new URLSearchParams(window.location.search).get('period'))
+    this.dayNight = new DayNight(this, this.currentPeriod())
+    const room = readRoomMap(this)
+
+    const shell = this.placeShell(room.shellTopLeft)
+
+    for (const spec of room.decor) {
+      if (!this.textures.exists(spec.name)) {
+        console.warn(`room.tmj: sprite "${spec.name}" não carregado; ignorado`)
+        continue
+      }
+      this.placeGroup(spec.name, spec)
+    }
 
     for (const spec of room.interactables) {
-      const obj = new Interactable(this, spec, {
-        onHover: (id, over) => this.handleHover(id, over),
-        onClick: (id) => this.openObject(id),
-      })
+      // Interagível sem sprite (ids do M3 no mapa antes da arte) não fica clicável; o menu de
+      // teclado ainda abre o painel dele, sem zoom.
+      if (!this.textures.exists(spec.id)) continue
+      const { main, layers } = this.placeGroup(spec.id, spec)
+      const obj = new Interactable(
+        this,
+        { id: spec.id, sprite: main, solidLayers: layers.filter((l) => isSolidLayer(l)) },
+        {
+          onHover: (id, over) => this.handleHover(id, over),
+          onClick: (id) => this.openObject(id),
+        },
+      )
       this.objects.set(spec.id, obj)
     }
+
+    this.focusCam = new FocusCamera(this, this.framing(shell))
+
+    // Dia/noite: reavaliado a cada minuto; a troca não mexe na câmera nem no EventBus.
+    this.time.addEvent({
+      delay: PERIOD_CHECK_MS,
+      loop: true,
+      callback: () => this.applyPeriod(),
+    })
 
     this.unsubscribers.push(
       EventBus.on('focus-object', (id) => this.requestFocus(id)),
@@ -41,6 +101,82 @@ export class Room extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.DESTROY, this.cleanup, this)
 
     EventBus.emit('scene-ready', this.scene.key)
+    EventBus.emit('period-changed', this.dayNight.period)
+  }
+
+  // A casca vai com o pivot (canto do fundo, no chão) na origem do mundo. Sem pivot, usa a
+  // posição do image layer do Tiled.
+  private placeShell(topLeft: { x: number; y: number } | null): Rect {
+    const key = 'room-shell'
+    if (!this.textures.exists(key)) throw new Error('room-shell não carregado')
+    const sprite = this.addSprite(key, 0, 0, DEPTH.shell)
+    if (!sprite.frame.customPivot && topLeft) sprite.setOrigin(0, 0).setPosition(topLeft.x, topLeft.y)
+    else if (topLeft && import.meta.env.DEV) {
+      const x = sprite.x - sprite.displayOriginX
+      const y = sprite.y - sprite.displayOriginY
+      if (x !== topLeft.x || y !== topLeft.y) {
+        console.warn(`room.tmj: image layer room-shell em (${topLeft.x}, ${topLeft.y}), pivot do PNG dá (${x}, ${y})`)
+      }
+    }
+    this.placeLayers(key, sprite)
+    return {
+      x: sprite.x - sprite.displayOriginX,
+      y: sprite.y - sprite.displayOriginY,
+      width: sprite.width,
+      height: sprite.height,
+    }
+  }
+
+  // Sprite principal na âncora da pegada + camadas no mesmo ponto.
+  private placeGroup(key: string, spec: PlacedSpec) {
+    const center = tileRectCenter(spec.footprint)
+    const p = isoToScreen(center.col, center.row)
+    const mount = readQuartoPixel(this.textures.get(key)).mount
+    const isWall = mount === 'wall-back' || mount === 'wall-left'
+    const depth = isWall ? DEPTH.wall : DEPTH.floor + center.col + center.row
+    const main = this.addSprite(key, Math.round(p.x), Math.round(p.y), depth)
+    return { main, layers: this.placeLayers(key, main) }
+  }
+
+  // Camadas = sprites cujo JSON diz `layerOf: <key>`, na ordem de ROOM_SPRITES.
+  private placeLayers(key: string, main: Phaser.GameObjects.Sprite) {
+    const layers: Phaser.GameObjects.Sprite[] = []
+    const base = main.depth === DEPTH.shell ? DEPTH.shellLayer : main.depth
+    const keys = Object.keys(ROOM_SPRITES).filter(
+      (k) => this.textures.exists(k) && readQuartoPixel(this.textures.get(k)).layerOf === key,
+    )
+    keys.forEach((layerKey, i) => {
+      const sync = readQuartoPixel(this.textures.get(layerKey)).syncFramesWith === key ? main : undefined
+      layers.push(this.addSprite(layerKey, main.x, main.y, base + LAYER_STEP * (i + 1), sync))
+    })
+    return layers
+  }
+
+  private addSprite(key: string, x: number, y: number, depth: number, syncWith?: Phaser.GameObjects.Sprite) {
+    if (!this.dayNight) throw new Error('DayNight não iniciado')
+    return this.dayNight.add(key, x, y, depth, syncWith)
+  }
+
+  private applyPeriod() {
+    const period = this.currentPeriod()
+    this.dayNight?.set(period)
+    EventBus.emit('period-changed', period)
+  }
+
+  private currentPeriod(): Period {
+    return this.forcedPeriod ?? periodAt(new Date())
+  }
+
+  // Área segura = largura do room-shell × (do topo do interagível mais alto, ou da linha de
+  // segurança das paredes, até o fim do piso).
+  private framing(shell: Rect): RoomFraming {
+    const full = padRect(shell, ROOM_PADDING)
+    let top = isoToScreen(WALL_SAFE_OFFSET_TILES, 0).y - WALL_SAFE_HEIGHT
+    for (const obj of this.objects.values()) top = Math.min(top, obj.bounds.y)
+    // A margem do quarto inteiro não entra na área segura: ela é só folga visual.
+    top = Math.max(shell.y, top - SAFE_MARGIN)
+    const bottom = shell.y + shell.height
+    return { full, safe: { x: shell.x, y: top, width: shell.width, height: bottom - top } }
   }
 
   private get isFree() {
@@ -90,7 +226,7 @@ export class Room extends Phaser.Scene {
     const obj = this.objects.get(id)
     this.setHovered(null)
     this.setCursors(false)
-    this.focusCam.focus(obj?.bounds ?? null, () => EventBus.emit('object-open', id))
+    this.focusCam.focus(obj?.focusBounds ?? null, () => EventBus.emit('object-open', id))
   }
 
   private closeObject() {
@@ -108,9 +244,18 @@ export class Room extends Phaser.Scene {
     this.unsubscribers = []
     this.focusCam?.destroy()
     this.focusCam = undefined
+    this.dayNight?.destroy()
+    this.dayNight = undefined
     for (const obj of this.objects.values()) obj.destroy()
     this.objects.clear()
     this.hoveredId = null
     this.queuedFocus = null
   }
+}
+
+// Camada que entra no hover e no clique do principal: não é luz e não pede `hit: "none"`.
+// (A `desk-lamp` final tem `hit: "none"`, porque a luminária já está desenhada no `computer`.)
+function isSolidLayer(sprite: Phaser.GameObjects.Sprite) {
+  const meta = readQuartoPixel(sprite.texture)
+  return !meta.light && meta.hit !== 'none'
 }

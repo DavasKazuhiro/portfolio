@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "lint": "oxlint",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "art": "node tools/art/build.mjs"
   },
   "dependencies": {
     "i18next": "^26.5.11",

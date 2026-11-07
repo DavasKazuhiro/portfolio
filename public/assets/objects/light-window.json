@@ -1,0 +1,125 @@
+{
+  "frames": {
+    "light-window 0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 472,
+        "h": 386
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 472,
+        "h": 386
+      },
+      "sourceSize": {
+        "w": 472,
+        "h": 386
+      },
+      "duration": 1000,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.40414507772020725
+      }
+    },
+    "light-window 1": {
+      "frame": {
+        "x": 472,
+        "y": 0,
+        "w": 472,
+        "h": 386
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 472,
+        "h": 386
+      },
+      "sourceSize": {
+        "w": 472,
+        "h": 386
+      },
+      "duration": 1000,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.40414507772020725
+      }
+    },
+    "light-window 2": {
+      "frame": {
+        "x": 944,
+        "y": 0,
+        "w": 472,
+        "h": 386
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 472,
+        "h": 386
+      },
+      "sourceSize": {
+        "w": 472,
+        "h": 386
+      },
+      "duration": 1000,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.40414507772020725
+      }
+    }
+  },
+  "meta": {
+    "app": "quarto-pixel tools/art",
+    "version": "1.0",
+    "image": "light-window.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 1416,
+      "h": 386
+    },
+    "scale": "1",
+    "frameTags": [
+      {
+        "direction": "forward",
+        "name": "day",
+        "from": 0,
+        "to": 0
+      },
+      {
+        "direction": "forward",
+        "name": "dusk",
+        "from": 1,
+        "to": 1
+      },
+      {
+        "direction": "forward",
+        "name": "night",
+        "from": 2,
+        "to": 2
+      }
+    ],
+    "layers": [],
+    "slices": [],
+    "quartoPixel": {
+      "anchor": [
+        236,
+        156
+      ],
+      "tile": [
+        0,
+        0
+      ],
+      "layerOf": "room-shell",
+      "light": true,
+      "hit": "none"
+    }
+  }
+}

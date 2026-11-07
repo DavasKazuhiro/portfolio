@@ -1,0 +1,95 @@
+{
+  "frames": {
+    "pc-tower 0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 56,
+        "h": 70
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 56,
+        "h": 70
+      },
+      "sourceSize": {
+        "w": 56,
+        "h": 70
+      },
+      "duration": 800,
+      "pivot": {
+        "x": 0.6785714285714286,
+        "y": 0.7428571428571429
+      }
+    },
+    "pc-tower 1": {
+      "frame": {
+        "x": 56,
+        "y": 0,
+        "w": 56,
+        "h": 70
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 56,
+        "h": 70
+      },
+      "sourceSize": {
+        "w": 56,
+        "h": 70
+      },
+      "duration": 800,
+      "pivot": {
+        "x": 0.6785714285714286,
+        "y": 0.7428571428571429
+      }
+    }
+  },
+  "meta": {
+    "app": "quarto-pixel tools/art",
+    "version": "1.0",
+    "image": "pc-tower.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 112,
+      "h": 70
+    },
+    "scale": "1",
+    "frameTags": [
+      {
+        "direction": "forward",
+        "name": "idle",
+        "from": 0,
+        "to": 1
+      }
+    ],
+    "layers": [],
+    "slices": [],
+    "quartoPixel": {
+      "anchor": [
+        38,
+        52
+      ],
+      "tile": [
+        4.5,
+        0.5
+      ],
+      "mount": "floor",
+      "footprint": [
+        [
+          0,
+          0,
+          1,
+          1
+        ]
+      ],
+      "hit": "none"
+    }
+  }
+}

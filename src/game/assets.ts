@@ -1,17 +1,41 @@
 // Chaves e caminhos dos assets carregados pelo Preload. Caminhos relativos ao index.html
-// (o build usa `base: './'`).
+// (o build usa `base: './'`). Contrato da arte: docs/arte/biblia-de-arte.md ("Arquivos, nomes e
+// âncoras") e docs/arte/specs.md.
 export const ASSETS = {
   roomMap: { key: 'room-map', url: 'maps/room.tmj' },
-  // `tileset` é o nome do tileset dentro do .tmj (precisa bater exatamente).
-  roomTiles: { key: 'tiles-placeholder-room', url: 'assets/tiles/placeholder-room.png', tileset: 'placeholder-room' },
 } as const
 
-// Cores da paleta provisória (docs/arte/biblia-de-arte.md) usadas pelo canvas.
+// Sprites do quarto gerados por tools/art (PNG + JSON Hash do Aseprite, com `pivot` e
+// `meta.quartoPixel`). A chave da textura é o nome do arquivo (= `id` do registry nos interagíveis).
+// Se um arquivo ainda não existir, o Preload cria um stand-in com o mesmo contrato
+// (objects/standins.ts).
+export const ROOM_SPRITES = {
+  'room-shell': 'assets/tiles/room-shell',
+  'light-window': 'assets/objects/light-window',
+  window: 'assets/objects/window',
+  computer: 'assets/objects/computer',
+  'desk-lamp': 'assets/objects/desk-lamp',
+  'light-computer': 'assets/objects/light-computer',
+  'pc-tower': 'assets/objects/pc-tower',
+  'desk-chair': 'assets/objects/desk-chair',
+} as const
+
+export type RoomSpriteKey = keyof typeof ROOM_SPRITES
+
+// Camadas (luminária, luzes) não são listadas aqui: cada JSON diz de quem é camada em
+// `meta.quartoPixel.layerOf` (bíblia: mesmo canvas e mesma âncora do principal). A ordem desta
+// lista é a ordem de empilhamento das camadas de um mesmo principal.
+
+// Tint (MULTIPLY) do entardecer e da noite. Mesmos valores de TINT em tools/art/palette.mjs.
+export const PERIOD_TINT = { day: 0xffffff, dusk: 0xf2c3a0, night: 0x6a6aa8 } as const
+
+// Cores da paleta usadas pelo canvas (docs/arte/biblia-de-arte.md).
 export const PALETTE = {
   bg: 0x1b1526,
   panel: 0x2b2140,
   border: 0x0f0b17,
   ink: 0xf3e9d2,
+  // = gold-2: outline de hover
   accent: 0xf4b860,
   cyan: 0x5ec4d6,
 } as const
