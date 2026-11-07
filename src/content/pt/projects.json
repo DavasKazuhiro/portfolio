@@ -22,7 +22,7 @@
       "JavaScript",
       "MySQL"
     ],
-    "link": "https://github.com/DavasKazuhiro/Estoque-CrazyCatGang"
+    "link": "https://github.com/davi-kazuhiro/Estoque-CrazyCatGang"
   },
   {
     "icon": "play",
@@ -31,7 +31,7 @@
     "tecnologias": [
       "Processing"
     ],
-    "link": "https://github.com/DavasKazuhiro/Beat-Learning"
+    "link": "https://github.com/davi-kazuhiro/Beat-Learning"
   },
   {
     "icon": "folder",
@@ -40,7 +40,7 @@
     "tecnologias": [
       "Python"
     ],
-    "link": "https://github.com/DavasKazuhiro/Organizador-de-Arquivos"
+    "link": "https://github.com/davi-kazuhiro/Organizador-de-Arquivos"
   },
   {
     "icon": "calculator",
@@ -49,6 +49,6 @@
     "tecnologias": [
       "Python"
     ],
-    "link": "https://github.com/DavasKazuhiro/TDE_Conjuntos_RPND"
+    "link": "https://github.com/davi-kazuhiro/TDE_Conjuntos_RPND"
   }
 ]
